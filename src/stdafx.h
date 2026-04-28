@@ -108,26 +108,43 @@ typedef uint32_t DWORD;
 #define ARRAYSIZE(z) (sizeof(z)/sizeof((z)[0]))
 // #endif
 
-#endif
-
 #ifdef _WIN32
 #include <string.h>
-#define strcasecmp _stricmp
-#define strncasecmp _strnicmp
-// #include <stdio.h>
-// #include <stdlib.h>
+#include <ctype.h>
 
-// TODO: Repalecc
-// static inline int strcasecmp(const char *s1, const char *s2) {
-//     // fprintf(stderr, "FATAL ERROR: strcasecmp needs to be replaced!\n");
-//     // abort(); 
-//     return 0;
-// }
-#else 
+inline int strcasecmp(const char *s1, const char *s2) {
+    return _stricmp(s1, s2);
+}
+
+inline int strncasecmp(const char *s1, const char *s2, size_t n) {
+    return _strnicmp(s1, s2, n);
+}
+#else
 #include <strings.h>
-// static inline int strcasecmp(const char *s1, const char *s2) {
-//     // fprintf(stderr, "FATAL ERROR: strcasecmp needs to be replaced!\n");
-//     // abort(); 
-//     return 0;
-// }
 #endif
+
+#endif
+
+// #ifdef _WIN32
+// #include <string.h>
+// #define strcasecmp _stricmp
+// #define strncasecmp _strnicmp
+// // #include <stdio.h>
+// // #include <stdlib.h>
+
+// // TODO: Repalecc
+// // static inline int strcasecmp(const char *s1, const char *s2) {
+// //     // fprintf(stderr, "FATAL ERROR: strcasecmp needs to be replaced!\n");
+// //     // abort(); 
+// //     return 0;
+// // }
+// #else 
+// #include <strings.h>
+// // static inline int strcasecmp(const char *s1, const char *s2) {
+// //     // fprintf(stderr, "FATAL ERROR: strcasecmp needs to be replaced!\n");
+// //     // abort(); 
+// //     return 0;
+// // }
+// #endif
+
+
