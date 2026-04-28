@@ -20,3 +20,5 @@ set_target_properties(libspasm PROPERTIES LINKER_LANGUAGE CXX)
 
 target_include_directories(libspasm PUBLIC ${SPASM_INCLUDES})
 target_include_directories(spasm PUBLIC ${SPASM_INCLUDES})
+
+add_definitions(-DNO_APPSIGN)

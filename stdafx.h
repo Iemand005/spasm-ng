@@ -43,8 +43,8 @@ typedef uint32_t DWORD;
 
 // int isxdigit(int c);
 // int isalnum(int c);
-
-char* strndup(const char* s, size_t n) {
+// TODO: dont do this inline shi
+static inline char* strndup(const char* s, size_t n) {
     if (s == NULL) return NULL;
 
     size_t len = strnlen(s, n);
@@ -112,7 +112,8 @@ typedef uint32_t DWORD;
 // #include <stdio.h>
 // #include <stdlib.h>
 
-int strcasecmp(const char *s1, const char *s2) {
+// TODO: Repalecc
+static inline int strcasecmp(const char *s1, const char *s2) {
     // fprintf(stderr, "FATAL ERROR: strcasecmp needs to be replaced!\n");
     // abort(); 
     return 0;
