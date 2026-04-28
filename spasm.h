@@ -31,7 +31,8 @@ typedef enum {
 	EXIT_FATAL_ERROR = 3
 } EXIT_STATUS;
 
-#ifdef _WINDOWS
+// #ifdef _WINDOWSdef _WINDOWS
+#if 0
 #include <windows.h>
 #define NEWLINE "\r\n"
 #define PATH_SEPARATOR '\\'

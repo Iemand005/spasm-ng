@@ -3,26 +3,38 @@
 #ifndef _STDAFX_H
 #define _STDAFX_H
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#undef WIN32
+
+// #include <stdio.h>
+// #include <stdlib.h>
+// #include <string.h>
 // #include <strings.h>
-#include <assert.h>
+// #include <assert.h>
 // #include <unistd.h>
-#include <ctype.h>
-#include <stdarg.h>
+// #include <ctype.h>
+// #include <stdarg.h>
 #ifndef NO_APPSIGN
 #include <gmp.h>
 #include <openssl/md5.h>
 #endif /* NO_APPSIGN */
-#include <math.h>
-#include <errno.h>
-#include <stdbool.h>
-#include <sys/timeb.h>
+// #include <math.h>
+// #include <errno.h>
+// #include <stdbool.h>
+// #include <sys/timeb.h>
 
-#include <stdint.h>
+// #include <stdint.h>
 
 #define __inout
+
+#define MAX_PATH 256
+#define STDMETHODIMP HRESULT
+
+#ifdef _MSC_VER
+    #define PACKED_STRUCT
+    #pragma pack(push, 1)
+#else
+    #define PACKED_STRUCT __attribute__((packed))
+#endif
 
 #ifdef _WIN32
     #include <tchar.h>
