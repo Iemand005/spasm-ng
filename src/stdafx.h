@@ -111,13 +111,23 @@ typedef uint32_t DWORD;
 #endif
 
 #ifdef _WIN32
+#include <string.h>
+#define strcasecmp _stricmp
+#define strncasecmp _strnicmp
 // #include <stdio.h>
 // #include <stdlib.h>
 
 // TODO: Repalecc
-static inline int strcasecmp(const char *s1, const char *s2) {
-    // fprintf(stderr, "FATAL ERROR: strcasecmp needs to be replaced!\n");
-    // abort(); 
-    return 0;
-}
+// static inline int strcasecmp(const char *s1, const char *s2) {
+//     // fprintf(stderr, "FATAL ERROR: strcasecmp needs to be replaced!\n");
+//     // abort(); 
+//     return 0;
+// }
+#else 
+#include <strings.h>
+// static inline int strcasecmp(const char *s1, const char *s2) {
+//     // fprintf(stderr, "FATAL ERROR: strcasecmp needs to be replaced!\n");
+//     // abort(); 
+//     return 0;
+// }
 #endif
