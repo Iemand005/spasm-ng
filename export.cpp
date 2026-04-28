@@ -9,7 +9,7 @@
 #include "utils.h"
 #include "errors.h"
 
-#include "md5.h"
+// #include "md5.h"
 
 #define name    (header8xk + 17)
 #define hleng   sizeof(header8xk)
@@ -284,7 +284,7 @@ void makeapp (const unsigned char *output_contents, DWORD size, FILE *outfile, c
 	unsigned char hashbuf[16];
 	// MD5 (buffer, size, hashbuf);  //This uses ssl but any good md5 should work fine.
 	// TODO: Can we do without ssdl bru
-	md5String((char *)buffer, hashbuf);
+	// md5String((char *)buffer, hashbuf);
 
 /* Generate the signature to the buffer */
 	siglength = siggen(hashbuf, buffer+size+3, &f );
