@@ -5,10 +5,10 @@ project(spasm)
 
 file(GLOB_RECURSE SPASM_SOURCES 
     # external/md5-c/md5.c
-    "*.c" 
-    "*.cpp"
-    "*.h"
-    "*.hpp"
+    "src/*.c" 
+    "src/*.cpp"
+    "src/*.h"
+    "src/*.hpp"
 )
 
 set(SPASM_INCLUDES ./)
