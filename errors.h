@@ -3,7 +3,7 @@
 typedef struct tagSPASMERROR
 {
 	DWORD dwCode;
-	LPCTSTR lpszDescription;
+	TCHAR * lpszDescription;
 }
 SPASMERROR, *LPSPASMERROR;
 
@@ -158,7 +158,7 @@ void ReplayFatalSPASMErrorSession(int nSession);
 void EndSPASMErrorSession(int errors);
 void ClearSPASMErrorSessions();
 int CleanupSPASMErrorSession(int nSession);
-void AddSPASMErrorSessionAnnotation(int nSession, LPCTSTR lpszFormat, ...);
+void AddSPASMErrorSessionAnnotation(int nSession, TCHAR * lpszFormat, ...);
 bool IsErrorInSPASMErrorSession(int nSession, DWORD dwErrorCode);
 void FreeSPASMErrorSessions(void);
 #ifdef _TEST

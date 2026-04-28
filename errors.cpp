@@ -193,7 +193,7 @@ bool IsErrorInSPASMErrorSession(int nSession, DWORD dwErrorCode)
 	return false;
 }
 
-void AddSPASMErrorSessionAnnotation(int nSession, LPCTSTR lpszFormat, ...)
+void AddSPASMErrorSessionAnnotation(int nSession, TCHAR * lpszFormat, ...)
 {
 	va_list valist;
 	va_start(valist, lpszFormat);
@@ -354,8 +354,8 @@ static void SetLastSPASMProblem(DWORD dwErrorCode, bool fIsWarning, va_list vali
 		}
 	}
 
-	LPCTSTR lpszProblemType = (fIsWarning) ? _T("warning") : _T("error");
-	LPCTSTR lpszProblemCode = (fIsWarning) ? _T("SW") : _T("SE");
+	TCHAR * lpszProblemType = (fIsWarning) ? _T("warning") : _T("error");
+	TCHAR * lpszProblemCode = (fIsWarning) ? _T("SW") : _T("SE");
 
 	if (lpErr->line_num != -1)
 	{

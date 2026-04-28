@@ -20,14 +20,24 @@
 #include <stdbool.h>
 #include <sys/timeb.h>
 
+#include <stdint.h>
+
 #define __inout
+
+#ifdef _WIN32
+    #include <string.h>
+    #define strcasecmp _stricmp
+    #define strncasecmp _strnicmp
+#else
+    #include <strings.h>
+#endif
 
 #ifdef UNIXVER
 typedef unsigned int DWORD;
 #else
-#include <windows.h>
+// #include <windows.h>
 #endif
-typedef const char *LPCTSTR;
+typedef const char *TCHAR *;
 typedef char *LPSTR, *LPTSTR;
 typedef char TCHAR;
 typedef void *LPVOID;
@@ -47,5 +57,4 @@ typedef void *LPVOID;
 #define ARRAYSIZE(z) (sizeof(z)/sizeof((z)[0]))
 #endif
 
-#endif
 #endif
