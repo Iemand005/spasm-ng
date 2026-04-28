@@ -9,6 +9,8 @@
 #include "utils.h"
 #include "errors.h"
 
+#include "md5.h"
+
 #define name    (header8xk + 17)
 #define hleng   sizeof(header8xk)
 unsigned char header8xk[] = {
@@ -278,20 +280,11 @@ void makeapp (const unsigned char *output_contents, DWORD size, FILE *outfile, c
 
 #ifndef NO_APPSIGN
 /* Calculate MD5 */
-#ifdef WIN32
-	unsigned char hashbuf[64];
-	HCRYPTPROV hCryptProv; 
-	HCRYPTHASH hCryptHash;
-	DWORD sizebuf = ARRAYSIZE(hashbuf);
-	CryptAcquireContext(&hCryptProv, NULL, NULL, PROV_RSA_FULL, CRYPT_VERIFYCONTEXT | CRYPT_MACHINE_KEYSET);
-	CryptCreateHash(hCryptProv, CALG_MD5, 0, 0, &hCryptHash);
-	CryptHashData(hCryptHash, buffer, size, 0);
-	CryptGetHashParam(hCryptHash, HP_HASHVAL, hashbuf, &sizebuf, 0);
-#else
+
 	unsigned char hashbuf[16];
 	// MD5 (buffer, size, hashbuf);  //This uses ssl but any good md5 should work fine.
 	// TODO: Can we do without ssdl bru
-#endif
+	md5String((char *)buffer, hashbuf);
 
 /* Generate the signature to the buffer */
 	siglength = siggen(hashbuf, buffer+size+3, &f );
