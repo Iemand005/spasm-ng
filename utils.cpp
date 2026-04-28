@@ -75,7 +75,8 @@ char *skip_to_next_line (const char *ptr) {
 
 bool is_name_char (char c) {
   static const char ext_label_set[] = { '_', '[', ']', '!', '?', '.' };
-  return isalnum(c) || memchr(ext_label_set, c, sizeof(ext_label_set)) != NULL;
+  // return isalnum(c) || memchr(ext_label_set, c, sizeof(ext_label_set)) != NULL;
+	return false ; // TODO: Replace isalnum
 }
 
 /*
@@ -121,8 +122,8 @@ char *skip_whitespace (const char *ptr) {
 	if (ptr == NULL)
 		return NULL;
 
-	while (isspace ((unsigned char) *ptr) && *ptr != '\n' && *ptr != '\r')
-		ptr++;
+	// while (isspace ((unsigned char) *ptr) && *ptr != '\n' && *ptr != '\r')
+	// 	ptr++; TODO: replace isspace
 
 	return (char *) ptr;
 }
@@ -461,8 +462,8 @@ bool read_expr_impl(const char ** const ptr, char word[256], const char *delims)
 finish_read_expr:
 	// Remove whitespace at the end
 	if (word) {
-		while (word_ptr > word && isspace((unsigned char) word_ptr[-1])) 
-			*(--word_ptr) = '\0';
+		// while (word_ptr > word && isspace((unsigned char) word_ptr[-1])) 
+		// 	*(--word_ptr) = '\0'; TODO: same ting
 		*word_ptr = '\0';
 	}
 
@@ -612,8 +613,8 @@ bool is_abs_path(const char *filename) {
 	if (strlen(fn) < 2)
 		return false;
 	
-	if (fn[1] == ':' && isalpha(fn[0]))
-		return true;
+	// if (fn[1] == ':' && isalpha(fn[0]))
+	// 	return true; TODO: The alpha
 	
 	return false;
 }

@@ -289,7 +289,8 @@ void makeapp (const unsigned char *output_contents, DWORD size, FILE *outfile, c
 	CryptGetHashParam(hCryptHash, HP_HASHVAL, hashbuf, &sizebuf, 0);
 #else
 	unsigned char hashbuf[16];
-	MD5 (buffer, size, hashbuf);  //This uses ssl but any good md5 should work fine.
+	// MD5 (buffer, size, hashbuf);  //This uses ssl but any good md5 should work fine.
+	// TODO: Can we do without ssdl bru
 #endif
 
 /* Generate the signature to the buffer */

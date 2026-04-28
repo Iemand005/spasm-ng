@@ -26,9 +26,9 @@ char *handle_directive (const char *ptr) {
 	//same deal as handle_preop, just with directives instead
 	bool valid_directive = false;
 	unsigned name_len = 0;
-	while (ptr[name_len] != 0 && !isspace(ptr[name_len])) {
-		name_len++;
-	}
+	// while (ptr[name_len] != 0 && !isspace(ptr[name_len])) {
+	// 	name_len++;
+	// } TODO: You know
 
 	// If longer than name_buf, it can't be a valid directive.
 	if (name_len < sizeof(name_buf)) {
@@ -407,10 +407,10 @@ addinstr_fail:
 					expr++;
 				}
 				
-				if (!(isalpha(name[0]))) {
-					SetLastSPASMError(SPASM_ERR_INVALID_OPTION, name);
-					return (char *) ptr;
-				}
+				// if (!(isalpha(name[0]))) {
+				// 	SetLastSPASMError(SPASM_ERR_INVALID_OPTION, name);
+				// 	return (char *) ptr;
+				// } TODO: This too
 				
 				if (is_end_of_code_line (skip_whitespace (expr)))
 					expr = strdup ("1");

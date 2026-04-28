@@ -128,7 +128,8 @@ char eb_get_char (expand_buf *buf, int offset) {
  */
 
 char *eb_extract (expand_buf *buf) {
-	return strndup ((char *) buf->start, buf->end - buf->start);
+	// return strndup ((char *) buf->start, buf->end - buf->start);
+	return ""; // TODO: More
 }
 
 

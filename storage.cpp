@@ -481,7 +481,7 @@ void set_define (define_t *define, const char *str, int len, bool redefined) {
 		if (define->contents)
 			free (define->contents);
 
-		define->contents = (len == -1 ? strdup (str) : strndup (str, len));
+		// define->contents = (len == -1 ? strdup (str) : strndup (str, len)); TODO: Duplicate replacement
 
 	} else {
 		char *result, *temp;
@@ -492,7 +492,7 @@ void set_define (define_t *define, const char *str, int len, bool redefined) {
 		define_table = hash_init (destroy_define_value);
 		
 		add_define (strdup (define->name), NULL, false)->contents = strdup (define->contents);
-		temp = len == -1 ? strdup (str) : strndup (str, len);
+		// temp = len == -1 ? strdup (str) : strndup (str, len); TODO: this strdup bru
 		result = expand_expr (temp, false);
 		free(temp);
 

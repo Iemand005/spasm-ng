@@ -37,6 +37,7 @@ CSPASMModule _AtlModule;
 int run_assembly()
 {
 #ifdef _WIN32
+#include <sys/timeb.h>
 	struct _timeb time_start, time_end;
 	_ftime(&time_start);
 #else
@@ -463,13 +464,13 @@ int main (int argc, char **argv)
 	ClearSPASMErrorSessions();
 	free_storage();
 
-#ifdef _WINDOWS
-	_CrtDumpMemoryLeaks();
-	if (IsDebuggerPresent())
-	{
-		system("PAUSE");
-	}
-#endif
+// #ifdef _WINDOWS
+// 	_CrtDumpMemoryLeaks();
+// 	if (IsDebuggerPresent())
+// 	{
+// 		system("PAUSE");
+// 	}
+// #endif
 
 	return error;
 }

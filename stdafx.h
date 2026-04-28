@@ -27,7 +27,10 @@
 #define __inout
 
 #define MAX_PATH 256
+#define HRESULT int
 #define STDMETHODIMP HRESULT
+#define S_OK 0
+#define LONG long
 
 #ifdef _MSC_VER
     #define PACKED_STRUCT
@@ -68,9 +71,9 @@ typedef uint32_t DWORD;
 #define StringCchPrintf(dest, size, fmt, ...) snprintf(dest, size, fmt, __VA_ARGS__)
 #define StringCchVPrintf(dest, size, fmt, args) vsnprintf(dest, size, fmt, args)
 
-#ifdef UNIXVER
+// #ifdef UNIXVER
 #define ARRAYSIZE(z) (sizeof(z)/sizeof((z)[0]))
-#endif
+// #endif
 
 #endif
 
