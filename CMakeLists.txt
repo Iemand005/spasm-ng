@@ -19,7 +19,7 @@ endif()
 target_include_directories(spasm PUBLIC ./)
 
 # target_link_libraries(spasm OpenSSL::SSL OpenSSL::Crypto)
-target_link_libraries(spasm PRIVATE crypto)
+# target_link_libraries(spasm PRIVATE crypto)
 
 set_target_properties(spasm PROPERTIES LINKER_LANGUAGE CXX)
 
