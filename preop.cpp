@@ -427,7 +427,8 @@ char *full_path (const char *filename) {
 	} while (GetFileAttributes(full_path) == 0xFFFFFFFF && dir);
 #else
 	}
-	// while (access (full_path, R_OK) && dir); TODO: which access
+	// while (access (full_path, R_OK) && dir); TOOD: boor
+	while (false);
 #endif
 
 #ifdef WIN32
