@@ -3,7 +3,7 @@ project(spasm)
 
 # add_subdirectory(external/openssl-cmake)
 
-file(GLOB_RECURSE SPASM_SOURCES 
+file(GLOB SPASM_SOURCES 
     # external/md5-c/md5.c
     "src/*.c" 
     "src/*.cpp"
