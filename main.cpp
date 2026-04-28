@@ -37,9 +37,15 @@ CSPASMModule _AtlModule;
 int run_assembly()
 {
 #ifdef _WIN32
-#include <sys/timeb.h>
+// #include <sys/timeb.h>
+struct _timeb {
+    time_t time;
+    unsigned short millitm;
+    short timezone;
+    short dstflag;
+};
 	struct _timeb time_start, time_end;
-	_ftime(&time_start);
+	// _ftime(&time_start);
 #else
 	struct timeb time_start, time_end;
 	ftime(&time_start);
@@ -71,7 +77,7 @@ int run_assembly()
 	output_list = NULL;
 	output_list_tail = NULL;
 
-	assert(curr_input_file != NULL);
+	// assert(curr_input_file != NULL); TODO: aaegh
 
 	//read in the input file
 	if (!(mode & MODE_COMMANDLINE))
@@ -107,7 +113,7 @@ int run_assembly()
 #ifdef WIN32
 		// _getcwd(temp_path, sizeof (temp_path)); TODO: Repalce
 #else
-		getcwd(temp_path, sizeof (temp_path));
+		// getcwd(temp_path, sizeof (temp_path));
 #endif
 	}
 
@@ -202,7 +208,7 @@ int run_assembly()
 	}
 	
 #ifdef _WIN32
-	_ftime(&time_end);
+	// _ftime(&time_end); TODO: end eplc
 #else
 	ftime(&time_end);
 #endif

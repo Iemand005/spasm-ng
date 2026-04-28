@@ -35,7 +35,7 @@ static void PrintSPASMError(const LPERRORINSTANCE lpError)
 		return;
 	}
 
-	assert(lpError != NULL);
+	// assert(lpError != NULL); TODO: What else
 	if ((lpError->dwErrorCode != SPASM_ERR_SUCCESS) || (lpError->lpszErrorText != NULL))
 	{
 		WORD orig_attributes = save_console_attributes();
@@ -196,7 +196,7 @@ bool IsErrorInSPASMErrorSession(int nSession, DWORD dwErrorCode)
 void AddSPASMErrorSessionAnnotation(int nSession, TCHAR * lpszFormat, ...)
 {
 	va_list valist;
-	va_start(valist, lpszFormat);
+	// va_start(valist, lpszFormat); TODO: baah
 
 	TCHAR szBuffer[256];
 	TCHAR szDescription[128] = _T("An error occurred");
@@ -206,7 +206,7 @@ void AddSPASMErrorSessionAnnotation(int nSession, TCHAR * lpszFormat, ...)
 	// 	curr_input_file, line_num, szDescription);
 	// TODO: replace
 
-	va_end(valist);
+	// va_end(valist); TODO: baah
 
 	list_t *pList = (list_t *) g_ErrorList;
 	while (pList != NULL)
@@ -382,19 +382,19 @@ static void SetLastSPASMProblem(DWORD dwErrorCode, bool fIsWarning, va_list vali
 void SetLastSPASMWarning(DWORD dwErrorCode, ...)
 {
 	va_list valist;
-	va_start(valist, dwErrorCode);
+	// va_start(valist, dwErrorCode); TODO: where more pls
 
 	SetLastSPASMProblem(dwErrorCode, true, valist);
 
-	va_end(valist);
+	// va_end(valist); TODO: where more pls
 }
 
 void SetLastSPASMError(DWORD dwErrorCode, ...)
 {
 	va_list valist;
-	va_start(valist, dwErrorCode);
+	// va_start(valist, dwErrorCode); TODO: where more pls
 
 	SetLastSPASMProblem(dwErrorCode, false, valist);
 
-	va_end(valist);
+	// va_end(valist); TODO: where more pls
 }

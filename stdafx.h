@@ -15,14 +15,14 @@
 // #include <stdarg.h>
 #ifndef NO_APPSIGN
 #include <gmp.h>
-#include <openssl/md5.h>
+// #include <openssl/md5.h>
 #endif /* NO_APPSIGN */
 // #include <math.h>
 // #include <errno.h>
 // #include <stdbool.h>
 // #include <sys/timeb.h>
 
-// #include <stdint.h>
+#include <stdint.h>
 
 #define __inout
 
@@ -31,10 +31,18 @@
 #define STDMETHODIMP HRESULT
 #define S_OK 0
 #define LONG long
+typedef char* LPSTR;
+typedef uint32_t DWORD;
+
+
 
 #ifdef _WIN32
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
+
+// int isxdigit(int c);
+// int isalnum(int c);
 
 char* strndup(const char* s, size_t n) {
     if (s == NULL) return NULL;
@@ -69,6 +77,10 @@ char* strndup(const char* s, size_t n) {
     typedef char TCHAR;
     typedef char *LPSTR, *LPTSTR;
 #endif
+
+// typedef TCHAR* LPTSTR;
+typedef char *LPSTR, *LPTSTR;
+
 
 #ifdef UNIXVER
 typedef unsigned int DWORD;

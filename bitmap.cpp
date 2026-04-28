@@ -9,12 +9,12 @@
 
 #ifndef WIN32
 #include <stdint.h>
-typedef int32_t LONG;
+// typedef int32_t LONG;
 typedef uint16_t UINT;
 typedef uint8_t BYTE;
 typedef uint16_t WORD;
 // Defined in stdafx.h
-//typedef uint32_t DWORD;
+// typedef uint32_t DWORD;
 #define LOBYTE(w)	((BYTE)(w))
 #define HIBYTE(w)	((BYTE)(((WORD)(w)>>8)&0xFF))
 #define BI_RGB 0

@@ -434,7 +434,7 @@ char *full_path (const char *filename) {
 #ifdef WIN32
 	if (GetFileAttributes(full_path) != 0xFFFFFFFF)
 #else
-	if (access (full_path, R_OK) == 0)
+	// if (access (full_path, R_OK) == 0) TODO: crossy pls
 #endif
 		return full_path;
 	
@@ -739,20 +739,21 @@ char *skip_until (char *ptr, int *pnLine, int argc, ...)
 			{
 				int i;
 				// Test all of the words that mark the end of the skipping
-				va_start(argp, argc);
-				i = argc;
-				while (i--) {
-					char *word = va_arg(argp, char *);
-					if (line_has_word (line, word, strlen (word)))
-					{
-						if (pnLine != NULL)
-						{
-							*pnLine = line_num_copy;
-						}	
-						return line;
-					}
-				}
-				va_end(argp);
+				// va_start(argp, argc);
+				// i = argc;
+				// while (i--) {
+				// 	char *word = va_arg(argp, char *);
+				// 	if (line_has_word (line, word, strlen (word)))
+				// 	{
+				// 		if (pnLine != NULL)
+				// 		{
+				// 			*pnLine = line_num_copy;
+				// 		}	
+				// 		return line;
+				// 	}
+				// }
+				// va_end(argp);
+				// TODO: Replace this fstuff
 			}
 			
 			line = next_code_line(line);
