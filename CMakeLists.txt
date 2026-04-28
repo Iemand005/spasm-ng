@@ -17,7 +17,6 @@ add_library(libspasm STATIC ${SPASM_SOURCES})
 add_executable(spasm ${SPASM_SOURCES})
 
 if(MSVC)
-    target_compile_options(spasm PRIVATE "/showIncludes")
     add_compile_options(/TP)
 endif()
 
