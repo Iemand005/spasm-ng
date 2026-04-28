@@ -12,6 +12,9 @@ file(GLOB_RECURSE SPASM_SOURCES
 
 add_library(spasm STATIC ${SPASM_SOURCES})
 
+if(MSVC)
+    target_compile_options(spasm PRIVATE "/showIncludes")
+endif()
 
 target_include_directories(spasm PUBLIC ./)
 
