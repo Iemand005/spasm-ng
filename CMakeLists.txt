@@ -4,23 +4,19 @@ project(spasm)
 # add_subdirectory(external/openssl-cmake)
 
 file(GLOB_RECURSE SPASM_SOURCES 
+    external/md5-c/md5.c
     "*.c" 
     "*.cpp"
     "*.h"
     "*.hpp"
 )
 
-add_library(spasm STATIC ${SPASM_SOURCES})
+set(SPASM_INCLUDES ./ external/md5-c)
 
-if(MSVC)
-    # target_compile_options(spasm PRIVATE "/showIncludes")
-endif()
+add_library(libspasm STATIC ${SPASM_SOURCES})
 
-target_include_directories(spasm PUBLIC ./)
+set_target_properties(libspasm PROPERTIES LINKER_LANGUAGE CXX)
 
-# target_link_libraries(spasm OpenSSL::SSL OpenSSL::Crypto)
-# target_link_libraries(spasm PRIVATE crypto)
-
-set_target_properties(spasm PROPERTIES LINKER_LANGUAGE CXX)
-
-add_definitions(-DARCH_X86_64 -D__x86_64__)
+add_executable(spasm ${SPASM_SOURCES})
+target_include_directories(libspasm PUBLIC ./ external/md5-c)
+target_include_directories(spasm PUBLIC ./ external/md5-c)
