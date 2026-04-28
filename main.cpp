@@ -104,7 +104,7 @@ int run_assembly()
 			strcpy(temp_path, ".");
 	} else {
 #ifdef WIN32
-		_getcwd(temp_path, sizeof (temp_path));
+		// _getcwd(temp_path, sizeof (temp_path)); TODO: Repalce
 #else
 		getcwd(temp_path, sizeof (temp_path));
 #endif

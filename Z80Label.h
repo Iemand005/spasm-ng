@@ -1,6 +1,6 @@
 #pragma once
 
-#include "SPASM_i.h"
+// #include "SPASM_i.h"
 #include "storage.h"
 
 class ATL_NO_VTABLE CZ80Label :

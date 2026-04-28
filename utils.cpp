@@ -242,7 +242,7 @@ char *eval (const char *expr)
 			sign = "-";
 			value = -value;
 		}
-		snprintf (result, sizeof (result), "%s$%0X", sign, value);
+		// snprintf (result, sizeof (result), "%s$%0X", sign, value); TODO: OK
 		expr_value = strdup (result);
 	}
 	else

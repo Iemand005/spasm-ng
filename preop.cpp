@@ -38,7 +38,7 @@ char *handle_preop (char *ptr) {
 	name_end = ptr;
 	while (*name_end != 0 && !isspace(*name_end))
 		name_end++;
-	name = strndup (ptr, name_end - ptr);
+	// name = strndup (ptr, name_end - ptr); todo: tod TODO: ok
 
 	//then try to match it against the list of preops
 	preop = 0;
@@ -128,7 +128,7 @@ char *handle_preop (char *ptr) {
 
 			nIfLevel++;
 			name_end = skip_to_name_end (ptr);
-			name = strndup (ptr, name_end - ptr);
+			// name = strndup (ptr, name_end - ptr); TODO: OTher Dup
 
 			//same as #ifdef, but reversed
 			define = search_defines (name);
@@ -173,7 +173,7 @@ char *handle_preop (char *ptr) {
 			}
 
 			name_end = skip_to_name_end (ptr);
-			name = strndup (ptr, name_end - ptr);
+			// name = strndup (ptr, name_end - ptr); TODO: Here too
 			remove_define (name);
 			free (name);
 			ptr = name_end;
@@ -198,7 +198,7 @@ char *handle_preop (char *ptr) {
 
 			//get the name
 			name_end = skip_to_name_end (ptr);
-			char *name = strndup(ptr, name_end - ptr);
+			// char *name = strndup(ptr, name_end - ptr); TODO: Here too do
 			
 			macro = add_define (name, NULL);
 			
@@ -282,7 +282,7 @@ char *handle_preop_define (const char *ptr) {
 
 	//get the name
 	name_end = skip_to_name_end (ptr);
-	define = add_define (strndup (ptr, name_end - ptr), &redefined);
+	// define = add_define (strndup (ptr, name_end - ptr), &redefined); TODO: Do this ttoo
 	if (define == NULL)
 		return skip_to_line_end (ptr);
 
@@ -406,7 +406,7 @@ char *full_path (const char *filename) {
 #ifdef WIN32
 	if (is_abs_path(filename) && (GetFileAttributes(filename) != 0xFFFFFFFF))
 #else
-	if (is_abs_path(filename) && (access (filename, R_OK) == 0))
+	// if (is_abs_path(filename) && (access (filename, R_OK) == 0)) TODO what
 #endif
 		return strdup (filename);
 	
@@ -426,7 +426,8 @@ char *full_path (const char *filename) {
 #ifdef WIN32
 	} while (GetFileAttributes(full_path) == 0xFFFFFFFF && dir);
 #else
-	} while (access (full_path, R_OK) && dir);
+	}
+	// while (access (full_path, R_OK) && dir); TODO: which access
 #endif
 
 #ifdef WIN32
@@ -522,7 +523,7 @@ static char *handle_preop_include (char *ptr)
 
 		if (mode & MODE_LIST && listing_on) {
 			char include_banner[MAX_PATH + 64];
-			snprintf(include_banner, sizeof (include_banner), "Listing for file \"%s\"" NEWLINE, fix_filename (alloc_path));
+			// snprintf(include_banner, sizeof (include_banner), "Listing for file \"%s\"" NEWLINE, fix_filename (alloc_path)); TODO: Aagain
 			listing_offset = eb_insert (listing_buf, listing_offset, include_banner, strlen (include_banner));
 		}
 		
@@ -549,7 +550,7 @@ static char *handle_preop_include (char *ptr)
 
 		if (mode & MODE_LIST && listing_on) {
 			char include_banner[MAX_PATH + 64];
-			snprintf(include_banner, sizeof (include_banner), "Listing for file \"%s\"" NEWLINE, curr_input_file);
+			// snprintf(include_banner, sizeof (include_banner), "Listing for file \"%s\"" NEWLINE, curr_input_file);??  TODO: Same
 			listing_offset = eb_insert (listing_buf, listing_offset, include_banner, strlen (include_banner));
 		}
 		
