@@ -14,9 +14,9 @@ file(GLOB_RECURSE SPASM_SOURCES
 set(SPASM_INCLUDES ./ external/md5-c)
 
 add_library(libspasm STATIC ${SPASM_SOURCES})
+add_executable(spasm ${SPASM_SOURCES})
 
 set_target_properties(libspasm PROPERTIES LINKER_LANGUAGE CXX)
 
-add_executable(spasm ${SPASM_SOURCES})
-target_include_directories(libspasm PUBLIC ./ external/md5-c)
-target_include_directories(spasm PUBLIC ./ external/md5-c)
+target_include_directories(libspasm PUBLIC ${SPASM_INCLUDES})
+target_include_directories(spasm PUBLIC ${SPASM_INCLUDES})
