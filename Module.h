@@ -2,7 +2,7 @@
 
 #ifdef _WINDOWS
 #ifndef _TEST
-#include "SPASM_h.h"
+// #include "SPASM_h.h"
 
 #ifdef SPASM_NG_ENABLE_COM
 class CSPASMModule : public ATL::CAtlExeModuleT<CSPASMModule>

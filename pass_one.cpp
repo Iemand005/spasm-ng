@@ -1,3 +1,5 @@
+#include "pass_one.h"
+
 #include "stdafx.h"
 
 #include "spasm.h"
@@ -498,7 +500,8 @@ char *handle_opcode_or_macro (char *ptr) {
 							listing_for_line_done = true;
 
 							char include_banner[MAX_PATH + 64];
-							snprintf(include_banner, sizeof (include_banner), "Listing for file \"%s\"" NEWLINE, old_filename);
+							// snprintf(include_banner, sizeof (include_banner), "Listing for file \"%s\"" NEWLINE, old_filename);
+							// TODO: Replace
 							listing_offset = eb_insert (listing_buf, listing_offset, include_banner, strlen (include_banner));
 							last_banner = old_filename;
 						}

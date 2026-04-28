@@ -25,11 +25,15 @@
 #define __inout
 
 #ifdef _WIN32
+    #include <tchar.h>
     #include <string.h>
     #define strcasecmp _stricmp
     #define strncasecmp _strnicmp
 #else
     #include <strings.h>
+    typedef const char *TCHAR *;
+    typedef char TCHAR;
+    typedef char *LPSTR, *LPTSTR;
 #endif
 
 #ifdef UNIXVER
@@ -37,10 +41,9 @@ typedef unsigned int DWORD;
 #else
 // #include <windows.h>
 #endif
-typedef const char *TCHAR *;
-typedef char *LPSTR, *LPTSTR;
-typedef char TCHAR;
+
 typedef void *LPVOID;
+typedef uint32_t DWORD;
 
 #define _T(z) z
 
@@ -57,4 +60,15 @@ typedef void *LPVOID;
 #define ARRAYSIZE(z) (sizeof(z)/sizeof((z)[0]))
 #endif
 
+#endif
+
+#ifdef _WIN32
+#include <stdio.h>
+#include <stdlib.h>
+
+int strcasecmp(const char *s1, const char *s2) {
+    fprintf(stderr, "FATAL ERROR: strcasecmp needs to be replaced!\n");
+    abort(); 
+    return 0;
+}
 #endif

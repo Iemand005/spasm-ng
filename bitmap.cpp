@@ -80,52 +80,53 @@ static void handle_bitmap_header(const RECT *r, const BITMAPFILEHEADER *bf, cons
 		hdr = strdup(def_hdr_fmt->contents);
 		reduce_string(hdr);
 
-		for (p = strtok(hdr, ",;x "); p; p = strtok(NULL, ",;x ")) {
+		// TODO: Replace:
+		// for (p = strtok(hdr, ",;x "); p; p = strtok(NULL, ",;x ")) {
 
-			if (!strcasecmp(p, "w")) {
-				if (r->right - r->left > 255)
-					show_warning("Bitmap width overflows 'w'; use 'ww' instead");
-				write_out(r->right - r->left);
-			}
-			else if (!strcasecmp(p, "ww")) {
-				write_out((r->right - r->left) & 0xFF);
-				program_counter++;
-				write_out((r->right - r->left) >> 8);
-			}
-			else if (!strcasecmp(p, "h")) {
-				if ((r->bottom - r->top) > 255)
-					show_warning("Bitmap height overflows 'h'; use 'hh' instead");
-				write_out((r->bottom - r->top));
-			}
-			else if (!strcasecmp(p, "hh")) {
-				write_out((r->bottom - r->top) & 0xFF);
-				program_counter++;
-				write_out((r->bottom - r->top) >> 8);
-			}
-			else if (!strcasecmp(p, "b"))
-				write_out(parse_f("__BM_SHD"));
-			else if (!strcasecmp(p, "s") || !strcasecmp(p, "ss")) {
-				int size = ((r->right - r->left) + 7)/8 * (r->bottom - r->top);
-				if (define_with_value ("__BM_SHD", 4)) size *=2;
-				else if (define_with_value ("__BM_SHD", 8)) size *=4;
-				if (define_with_value ("__BM_MASK", 1)) size += ((r->right - r->left) + 7)/8 * (r->bottom - r->top);
+		// 	if (!strcasecmp(p, "w")) {
+		// 		if (r->right - r->left > 255)
+		// 			show_warning("Bitmap width overflows 'w'; use 'ww' instead");
+		// 		write_out(r->right - r->left);
+		// 	}
+		// 	else if (!strcasecmp(p, "ww")) {
+		// 		write_out((r->right - r->left) & 0xFF);
+		// 		program_counter++;
+		// 		write_out((r->right - r->left) >> 8);
+		// 	}
+		// 	else if (!strcasecmp(p, "h")) {
+		// 		if ((r->bottom - r->top) > 255)
+		// 			show_warning("Bitmap height overflows 'h'; use 'hh' instead");
+		// 		write_out((r->bottom - r->top));
+		// 	}
+		// 	else if (!strcasecmp(p, "hh")) {
+		// 		write_out((r->bottom - r->top) & 0xFF);
+		// 		program_counter++;
+		// 		write_out((r->bottom - r->top) >> 8);
+		// 	}
+		// 	else if (!strcasecmp(p, "b"))
+		// 		write_out(parse_f("__BM_SHD"));
+		// 	else if (!strcasecmp(p, "s") || !strcasecmp(p, "ss")) {
+		// 		int size = ((r->right - r->left) + 7)/8 * (r->bottom - r->top);
+		// 		if (define_with_value ("__BM_SHD", 4)) size *=2;
+		// 		else if (define_with_value ("__BM_SHD", 8)) size *=4;
+		// 		if (define_with_value ("__BM_MASK", 1)) size += ((r->right - r->left) + 7)/8 * (r->bottom - r->top);
 
-				if (!strcasecmp(p, "s")) {
-					if (size > 255)
-						show_warning("Bitmap size overflows 's'; use 'ss' instead");
-					write_out(size);
-				} else {
-					write_out(size & 0xFF);
-					program_counter++;
-					write_out((size >> 8) & 0xFF);
-				}
+		// 		if (!strcasecmp(p, "s")) {
+		// 			if (size > 255)
+		// 				show_warning("Bitmap size overflows 's'; use 'ss' instead");
+		// 			write_out(size);
+		// 		} else {
+		// 			write_out(size & 0xFF);
+		// 			program_counter++;
+		// 			write_out((size >> 8) & 0xFF);
+		// 		}
 				
-			} else {
-				show_warning("Unknown BM_HEADER token '%s'", p);
-				write_out(0);
-			}
-			program_counter++;
-		}
+		// 	} else {
+		// 		show_warning("Unknown BM_HEADER token '%s'", p);
+		// 		write_out(0);
+		// 	}
+		// 	program_counter++;
+		// }
 		
 		free(hdr);
 	}

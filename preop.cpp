@@ -43,9 +43,10 @@ char *handle_preop (char *ptr) {
 	//then try to match it against the list of preops
 	preop = 0;
 	while (preops[preop]) {
-		if (!strcasecmp (preops[preop], name)) {
-			break;
-		}
+		// TODO: Replace:
+		// if (!strcasecmp (preops[preop], name)) {
+		// 	break;
+		// }
 		preop++;
 	}
 
@@ -317,20 +318,22 @@ char *handle_preop_define (const char *ptr) {
 		//check for certain special functions
 		read_expr (&eval_ptr, word, "(");
 		//handle EVAL, evaluate the contents
-		if (!strcasecmp (word, "eval")) {
-			char expr[256], *new_value;
-			if (*eval_ptr == '(')
-				eval_ptr++;
-			read_expr (&eval_ptr, expr, ")");
-			new_value = eval (expr);
-			set_define (define, new_value, -1, redefined);
-			free (new_value);
-			if (*eval_ptr == ')')
-				eval_ptr++;
-			ptr = eval_ptr;
+		// TODO: REplace:
+		// if (!strcasecmp (word, "eval")) {
+		// 	char expr[256], *new_value;
+		// 	if (*eval_ptr == '(')
+		// 		eval_ptr++;
+		// 	read_expr (&eval_ptr, expr, ")");
+		// 	new_value = eval (expr);
+		// 	set_define (define, new_value, -1, redefined);
+		// 	free (new_value);
+		// 	if (*eval_ptr == ')')
+		// 		eval_ptr++;
+		// 	ptr = eval_ptr;
 
-		//handle CONCAT, concatenate contents
-		} else if (!strcasecmp (word, "concat")) {
+		// //handle CONCAT, concatenate contents
+		// } else if (!strcasecmp (word, "concat"))
+		{
 			
 			expand_buf *buffer;
 			int value;
@@ -380,11 +383,12 @@ char *handle_preop_define (const char *ptr) {
 			eb_free(buffer);
 			ptr = eval_ptr;
 			
-		} else {
-			value_end = skip_to_line_end (ptr);
-			set_define (define, ptr, value_end - ptr, redefined);
-			ptr = value_end;
 		}
+		// else { TODO: What;s thtis?
+		// 	value_end = skip_to_line_end (ptr);
+		// 	set_define (define, ptr, value_end - ptr, redefined);
+		// 	ptr = value_end;
+		// }
 	}
 
 	return (char *) ptr;

@@ -202,8 +202,9 @@ void AddSPASMErrorSessionAnnotation(int nSession, TCHAR * lpszFormat, ...)
 	TCHAR szDescription[128] = _T("An error occurred");
 
 	StringCchVPrintf(szDescription, ARRAYSIZE(szDescription), lpszFormat, valist);
-	StringCchPrintf(szBuffer, ARRAYSIZE(szBuffer), _T("%s:%d: %s"),
-		curr_input_file, line_num, szDescription);
+	// StringCchPrintf(szBuffer, ARRAYSIZE(szBuffer), _T("%s:%d: %s"),
+	// 	curr_input_file, line_num, szDescription);
+	// TODO: replace
 
 	va_end(valist);
 
@@ -357,16 +358,17 @@ static void SetLastSPASMProblem(DWORD dwErrorCode, bool fIsWarning, va_list vali
 	TCHAR * lpszProblemType = (fIsWarning) ? _T("warning") : _T("error");
 	TCHAR * lpszProblemCode = (fIsWarning) ? _T("SW") : _T("SE");
 
-	if (lpErr->line_num != -1)
-	{
-		StringCchPrintf(szBuffer, ARRAYSIZE(szBuffer), _T("%s:%d: %s %s%03X: %s"),
-			lpErr->lpszFileName, lpErr->line_num, lpszProblemType, lpszProblemCode, lpErr->dwErrorCode, szDescription);
-	}
-	else
-	{
-		StringCchPrintf(szBuffer, ARRAYSIZE(szBuffer), _T("%s: %s %s%03X: %s"),
-			lpErr->lpszFileName, lpszProblemType, lpszProblemCode, lpErr->dwErrorCode, szDescription);
-	}
+	// TODO: Replace
+	// if (lpErr->line_num != -1)
+	// {
+	// 	StringCchPrintf(szBuffer, ARRAYSIZE(szBuffer), _T("%s:%d: %s %s%03X: %s"),
+	// 		lpErr->lpszFileName, lpErr->line_num, lpszProblemType, lpszProblemCode, lpErr->dwErrorCode, szDescription);
+	// }
+	// else
+	// {
+	// 	StringCchPrintf(szBuffer, ARRAYSIZE(szBuffer), _T("%s: %s %s%03X: %s"),
+	// 		lpErr->lpszFileName, lpszProblemType, lpszProblemCode, lpErr->dwErrorCode, szDescription);
+	// }
 
 	lpErr->lpszErrorText = _strdup(szBuffer);
 
