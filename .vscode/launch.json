@@ -1,0 +1,17 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Spasm Assemble Test",
+            "type": "cppvsdbg", 
+            "request": "launch",
+            "program": "${command:cmake.launchTargetPath}",
+            "args": [
+                ".\\test.asm",
+                "EE.8xp"
+            ],
+            "cwd": "${workspaceFolder}",
+            "console": "integratedTerminal"
+        }
+    ]
+}

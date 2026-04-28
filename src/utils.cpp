@@ -922,7 +922,7 @@ void show_error(const char *text, ...) {
 	show_error_prefix(curr_input_file, line_num);
 
 	set_console_attributes (COLOR_RED);
-	// va_start(args, text); TODO: what this again deadlock
+	va_start(args, text);
 	
 	vprintf (text, args); 
 	putchar ('\n');
@@ -942,7 +942,7 @@ void show_fatal_error(const char *text, ...) {
 #endif
 
 	set_console_attributes (COLOR_RED);
-	// va_start(args, text); TODO: again
+	va_start(args, text);
 
 	vprintf (text, args);
 	putchar ('\n');
@@ -971,7 +971,7 @@ void show_warning(const char *text, ...) {
 #endif
 
 	set_console_attributes (COLOR_YELLOW);
-	// va_start(args, text); TODO: Stop
+	va_start(args, text);
 
 	vprintf (text, args);
 	putchar ('\n');
