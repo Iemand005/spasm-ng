@@ -820,7 +820,7 @@ static void expand_expr_full (const char *expr, expand_buf *new_expr, int depth,
 		name_len = name - expr;
 		//skip if there's no name, or if it's a macro with arguments
 		if (name_len > 0) {
-			name = strndup (expr, name_len);
+			// name = strndup (expr, name_len); TODO: ugh
 			
 			//if it's a define, recursively expand its contents
 			if ((define = search_defines (name, search_local)) && define->contents != NULL) {
@@ -922,7 +922,7 @@ void show_error(const char *text, ...) {
 	show_error_prefix(curr_input_file, line_num);
 
 	set_console_attributes (COLOR_RED);
-	va_start(args, text);
+	// va_start(args, text); TODO: what this again deadlock
 	
 	vprintf (text, args); 
 	putchar ('\n');
@@ -942,7 +942,7 @@ void show_fatal_error(const char *text, ...) {
 #endif
 
 	set_console_attributes (COLOR_RED);
-	va_start(args, text);
+	// va_start(args, text); TODO: again
 
 	vprintf (text, args);
 	putchar ('\n');
@@ -971,7 +971,7 @@ void show_warning(const char *text, ...) {
 #endif
 
 	set_console_attributes (COLOR_YELLOW);
-	va_start(args, text);
+	// va_start(args, text); TODO: Stop
 
 	vprintf (text, args);
 	putchar ('\n');

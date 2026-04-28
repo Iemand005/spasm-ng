@@ -105,7 +105,7 @@ char *handle_preop (char *ptr) {
 
 			nIfLevel++;
 			name_end = skip_to_name_end (ptr);
-			name = strndup (ptr, name_end - ptr);
+			// name = strndup (ptr, name_end - ptr); TODO: bruh
 			//if it's defined, do all the normal #if stuff
 			define = search_defines (name);
 			condition = (define != NULL) && (define->contents!= NULL);
