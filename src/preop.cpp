@@ -10,6 +10,8 @@
 #include "errors.h"
 #include "bitmap.h"
 
+#include <filesystem>
+
 char *do_if (char *ptr, int condition);
 char *do_elif (char *ptr, int condition);
 char *handle_preop_define (const char *ptr);
@@ -402,17 +404,19 @@ char *full_path (const char *filename) {
 	char *full_path;
 
 	std::string path = filename;
+	std::filesystem::path fullPath(path);
+	const char * clean = fullPath.lexically_normal().string().c_str();
 
-	if (!path.empty() && path.front() == ' ') path.erase(0, 1);
-	if (!path.empty() && path.front() == '"') path.erase(0, 1);
-	if (!path.empty() && path.back() == '"') path.pop_back();
+	// if (!path.empty() && path.front() == ' ') path.erase(0, 1);
+	// if (!path.empty() && path.front() == '"') path.erase(0, 1);
+	// if (!path.empty() && path.back() == '"') path.pop_back();
 
 #ifdef WIN32
 	if (is_abs_path(filename) && (GetFileAttributes(filename) != 0xFFFFFFFF))
 #else
-	if (is_abs_path(path.c_str()))// && (access (filename, R_OK) == 0)) TODO what
+	if (is_abs_path(clean))// && (access (filename, R_OK) == 0)) TODO what
 #endif
-		return strdup (path.c_str());
+		return strdup (clean);
 	
 	dir = include_dirs;
 	full_path = NULL;
@@ -421,17 +425,17 @@ char *full_path (const char *filename) {
 		
 		eb_append (eb, (char *) dir->data, -1);
 		eb_append (eb, "/", 1);
-		eb_append (eb, path.c_str(), -1);
+		eb_append (eb, clean, -1);
 		free (full_path);
 		full_path = eb_extract (eb);
 		fix_filename (full_path);
 		eb_free (eb);
 		dir = dir->next;
 #ifdef WIN32
-	} while (GetFileAttributes(full_path) == 0xFFFFFFFF && dir);
+	} while (GetFileAttributes(clean) == 0xFFFFFFFF && dir);
 #else
 	}
-	// while (access (full_path, R_OK) && dir); TOOD: boor
+	// while (access (clean, R_OK) && dir); TOOD: boor
 	while (false);
 #endif
 
