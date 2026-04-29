@@ -70,12 +70,19 @@ GLOBAL list_t *include_dirs, *input_files;
 GLOBAL unsigned int program_counter;
 GLOBAL label_t *last_label;
 GLOBAL unsigned int stats_codesize, stats_datasize, stats_mintime, stats_maxtime;
-GLOBAL int line_num;
 GLOBAL char temp_path[MAX_PATH];
-GLOBAL char *curr_input_file, *output_filename;
+#ifdef __cplusplus
+extern "C" {
+	#endif
+GLOBAL int line_num;
+GLOBAL char *curr_input_file;
+GLOBAL bool error_occurred;
+#ifdef __cplusplus
+}
+#endif
+GLOBAL char *output_filename;
 GLOBAL char *input_contents;
 GLOBAL unsigned char *out_ptr, *output_contents;
-GLOBAL bool error_occurred;
 GLOBAL expand_buf *listing_buf;
 GLOBAL size_t listing_offset;
 GLOBAL bool listing_on;
