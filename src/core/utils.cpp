@@ -655,7 +655,26 @@ void release_file_contents(char *contents)
  * or NULL on error
  */
 
-char *get_file_contents (const char *filename) {
+char *get_file_contents(const char *filename) {
+	FILE *file;
+	char *buffer;
+	size_t size, read_size;
+
+	// First try to open it
+	file = fopen(filename, "rb");
+	get_file_contents(file);
+	fclose(file);
+}
+
+/*
+ * Gets file contents,
+ * sets size and
+ * returns address of
+ * allocated contents
+ * or NULL on error
+ */
+
+char *get_file_contents(FILE *file) {
 #ifdef USE_MEMORY_MAPPED_FILES
 	HANDLE hFile = CreateFile(
 		filename,
@@ -681,20 +700,16 @@ char *get_file_contents (const char *filename) {
 	LPBYTE lpData = (LPBYTE) MapViewOfFile(hMapFile, FILE_MAP_READ, 0, 0, 0);
 	return (char *) lpData;
 #else
-	FILE *file;
 	char *buffer;
 	size_t size, read_size;
-
-	// first try to open it
-	file = fopen (filename, "rb");
 
 	if (!file)
 		return NULL;
 
-	// find file size (Spencer says it's not a hack)
-	fseek (file, 0, SEEK_END);
-	size = ftell (file);
-	rewind (file);
+	// Find file size (Spencer says it's not a hack) Hi Spencer :3 totally not a hack
+	fseek(file, 0, SEEK_END);
+	size = ftell(file);
+	rewind(file);
 
 
 	// If there is a UTF-8 endian marker at the beginning of the file, skip it.
@@ -714,12 +729,11 @@ char *get_file_contents (const char *filename) {
 	}
 
 	// now allocate the memory and read in the contents
-	buffer = (char *) malloc (size + 1);
-	read_size = fread (buffer, 1, size, file);
-	fclose (file);
+	buffer = (char *) malloc(size + 1);
+	read_size = fread(buffer, 1, size, file);
 
 	if (read_size != size) {
-		free (buffer);
+		free(buffer);
 		return NULL;
 	}
 
