@@ -662,8 +662,9 @@ char *get_file_contents(const char *filename) {
 
 	// First try to open it
 	file = fopen(filename, "rb");
-	get_file_contents(file);
+	char *contents = get_file_contents(file);
 	fclose(file);
+	return contents;
 }
 
 /*

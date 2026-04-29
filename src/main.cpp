@@ -80,10 +80,10 @@ struct _timeb {
 
 	//read in the input file
 	if (!(mode & MODE_COMMANDLINE))
-		input_contents = (char *) get_file_contents (curr_input_file);
+		input_contents = (char *)get_file_contents(curr_input_file);
 
 	if (!input_contents) {
-		puts ("Couldn't open input file");
+		puts("Couldn't open input file");
 		return EXIT_FATAL_ERROR;
 	}
 	
@@ -91,7 +91,7 @@ struct _timeb {
 
 	//along with the listing buffer, if required
 	if ((mode & MODE_LIST)) {
-		listing_buf = eb_init (LISTING_BUF_SIZE);
+		listing_buf = eb_init(LISTING_BUF_SIZE);
 		listing_offset = 0;
 		listing_on = true;
 	}
