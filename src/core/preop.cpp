@@ -520,28 +520,29 @@ static char *handle_preop_include(char *ptr)
 		fclose (file);
 		free (file_path);
 	} else {
-		fclose (file);
 		
-		input_contents = get_file_contents(file_path);
+		input_contents = get_file_contents(file);
+		fclose (file);
+
 		if (!input_contents) {
-			show_error ("Couldn't open #included file %s", file_path);
+			show_error("Couldn't open #included file %s", file_path);
 			free (file_path);
 			return ptr;
 		}
 
 		//add it to the list of input files
-		alloc_path = strdup (file_path);
+		alloc_path = strdup(file_path);
 		input_files = list_prepend(input_files, alloc_path);
-		free (file_path);
+		free(file_path);
 
 		//make sure the listing for this line is finished up BEFORE
 		// the new file is parsed and writes its listing stuff all over
 		if (mode & MODE_LIST && listing_on && !listing_for_line_done)
-			do_listing_for_line (skip_to_next_line(line_start));
+			do_listing_for_line(skip_to_next_line(line_start));
 
 		if (mode & MODE_LIST && listing_on) {
 			char include_banner[MAX_PATH + 64];
-			// snprintf(include_banner, sizeof (include_banner), "Listing for file \"%s\"" NEWLINE, fix_filename (alloc_path)); TODO: Aagain
+			snprintf(include_banner, sizeof (include_banner), "Listing for file \"%s\"" NEWLINE, fix_filename (alloc_path));
 			listing_offset = eb_insert(listing_buf, listing_offset, include_banner, strlen(include_banner));
 		}
 		
@@ -554,7 +555,7 @@ static char *handle_preop_include(char *ptr)
 		curr_input_file = alloc_path;
 
 		//now parse the file
-		run_first_pass (input_contents);
+		run_first_pass(input_contents);
 
 		//when done, swap the old curr_X values back in
 		curr_input_file = old_input_file;
@@ -568,12 +569,12 @@ static char *handle_preop_include(char *ptr)
 
 		if (mode & MODE_LIST && listing_on) {
 			char include_banner[MAX_PATH + 64];
-			// snprintf(include_banner, sizeof (include_banner), "Listing for file \"%s\"" NEWLINE, curr_input_file);??  TODO: Same
-			listing_offset = eb_insert (listing_buf, listing_offset, include_banner, strlen (include_banner));
+			snprintf(include_banner, sizeof (include_banner), "Listing for file \"%s\"" NEWLINE, curr_input_file);
+			listing_offset = eb_insert(listing_buf, listing_offset, include_banner, strlen (include_banner));
 		}
 		
 		//and free up stuff
-		//free (input_contents);
+		// free (input_contents);
 		release_file_contents(input_contents);
 	}
 	return ptr;
