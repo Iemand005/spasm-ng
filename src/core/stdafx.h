@@ -9,22 +9,11 @@
 #include <stdarg.h>
 #include <string>
 
-// #include <stdio.h>
-// #include <stdlib.h>
-// #include <string.h>
-// #include <strings.h>
-// #include <assert.h>
-// #include <unistd.h>
-// #include <ctype.h>
-// #include <stdarg.h>
 #ifndef NO_APPSIGN
 #include <gmp.h>
-// #include <openssl/md5.h>
+// #include <openssl/md5.h> TODO: Replace OpenSSL with way smaller library why'd you do entire openssl over one md5 func
 #endif /* NO_APPSIGN */
-// #include <math.h>
-// #include <errno.h>
-// #include <stdbool.h>
-// #include <sys/timeb.h>
+
 
 #include <stdint.h>
 
@@ -126,27 +115,3 @@ inline int strncasecmp(const char *s1, const char *s2, size_t n) {
 #endif
 
 #endif
-
-// #ifdef _WIN32
-// #include <string.h>
-// #define strcasecmp _stricmp
-// #define strncasecmp _strnicmp
-// // #include <stdio.h>
-// // #include <stdlib.h>
-
-// // TODO: Repalecc
-// // static inline int strcasecmp(const char *s1, const char *s2) {
-// //     // fprintf(stderr, "FATAL ERROR: strcasecmp needs to be replaced!\n");
-// //     // abort(); 
-// //     return 0;
-// // }
-// #else 
-// #include <strings.h>
-// // static inline int strcasecmp(const char *s1, const char *s2) {
-// //     // fprintf(stderr, "FATAL ERROR: strcasecmp needs to be replaced!\n");
-// //     // abort(); 
-// //     return 0;
-// // }
-// #endif
-
-
