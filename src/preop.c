@@ -10,7 +10,9 @@
 #include "errors.h"
 #include "bitmap.h"
 
+#include <sys/types.h>
 #include <sys/stat.h>
+#include <stdbool.h>
 
 char *do_if (char *ptr, int condition);
 char *do_elif (char *ptr, int condition);

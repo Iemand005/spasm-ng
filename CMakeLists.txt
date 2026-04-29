@@ -8,7 +8,6 @@ file(GLOB SPASM_SOURCES
     "src/*.c" 
     "src/*.cpp"
     "src/*.h"
-    "src/*.hpp"
 )
 
 set(SPASM_INCLUDES ./)
