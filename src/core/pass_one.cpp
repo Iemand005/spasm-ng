@@ -86,26 +86,25 @@ void do_listing_for_line (char *ptr) {
 
 	//make sure empty bytes are filled
 	while (listing_width < 4) {
-		listing_offset = eb_insert (listing_buf, listing_offset, "-  ", 3);
+		listing_offset = eb_insert(listing_buf, listing_offset, "-  ", 3);
 		listing_width++;
 	}
 
 	//and finally, write the contents of the line
-	//TODO: clean up?
 	curr_line = skip_to_next_line (line_start);
 	while (curr_line < ptr) {
-		listing_offset = eb_insert (listing_buf, listing_offset, line_start, curr_line - line_start);
+		listing_offset = eb_insert(listing_buf, listing_offset, line_start, curr_line - line_start);
 		line_start = curr_line;
-		curr_line = skip_to_next_line (curr_line);
+		curr_line = skip_to_next_line(curr_line);
 
 		old_line_num++;
 		sprintf (text, "%5d %02X:%04X             ", old_line_num, (program_counter >> 16), program_counter & 0xFFFF);
-		listing_offset = eb_insert (listing_buf, listing_offset, text, strlen (text));
+		listing_offset = eb_insert(listing_buf, listing_offset, text, strlen (text));
 	}
-	listing_offset = eb_insert (listing_buf, listing_offset, line_start, ptr - line_start);
+	listing_offset = eb_insert(listing_buf, listing_offset, line_start, ptr - line_start);
 	//make sure there's a newline char at the end
 	if (*(ptr - 1) != '\n') {
-		listing_offset = eb_insert (listing_buf, listing_offset, NEWLINE, -1);
+		listing_offset = eb_insert(listing_buf, listing_offset, NEWLINE, -1);
 	}
 }
 
@@ -223,22 +222,22 @@ char *run_first_pass_line_sec (char *ptr) {
 			last_label = add_label (name, program_counter);
 		}
 
-		return run_first_pass_line_sec (ptr);
+		return run_first_pass_line_sec(ptr);
 	} else if (isspace ((unsigned char) *ptr)) {
 		//if it starts with whitespace, skip that
-		ptr = skip_whitespace (ptr);
+		ptr = skip_whitespace(ptr);
 
 		if (isalpha (*ptr) || *ptr == '_')
 			//otherwise, it might be an instruction or macro
-			return handle_opcode_or_macro (ptr);
+			return handle_opcode_or_macro(ptr);
 		
-		return run_first_pass_line_sec (ptr);		
+		return run_first_pass_line_sec(ptr);		
 	} else if (*ptr == '.') {
 		//handle it if it's a directive
-		return handle_directive (++ptr);
+		return handle_directive(++ptr);
 	} else if (*ptr == '#') {
 		//or pre-op
-		return handle_preop (++ptr);
+		return handle_preop(++ptr);
 	} else if (*ptr == '=') {
 		//handle 'x = 1234' type lines
 		int value;
@@ -500,9 +499,8 @@ char *handle_opcode_or_macro (char *ptr) {
 							listing_for_line_done = true;
 
 							char include_banner[MAX_PATH + 64];
-							// snprintf(include_banner, sizeof (include_banner), "Listing for file \"%s\"" NEWLINE, old_filename);
-							// TODO: Replace
-							listing_offset = eb_insert (listing_buf, listing_offset, include_banner, strlen (include_banner));
+							snprintf(include_banner, sizeof (include_banner), "Listing for file \"%s\"" NEWLINE, old_filename);
+							listing_offset = eb_insert(listing_buf, listing_offset, include_banner, strlen(include_banner));
 							last_banner = old_filename;
 						}
 

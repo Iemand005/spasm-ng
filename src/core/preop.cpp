@@ -92,7 +92,7 @@ char *handle_preop(char *ptr) {
 		}
 		case INCLUDE: //INCLUDE
 		{
-			ptr = handle_preop_include (ptr);
+			ptr = handle_preop_include(ptr);
 			break;
 		}
 		case IF: //IF
