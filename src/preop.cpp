@@ -10,7 +10,7 @@
 #include "errors.h"
 #include "bitmap.h"
 
-#include <filesystem>
+#include <sys/stat.h>
 
 char *do_if (char *ptr, int condition);
 char *do_elif (char *ptr, int condition);
@@ -400,6 +400,11 @@ const char *sanitize_path(std::string path) {
 	return path.c_str();
 }
 
+bool file_exists(const std::string& name) {
+  struct stat buffer;   
+  return (stat(name.c_str(), &buffer) == 0); 
+}
+
 /*
  * Given a filename (which may be surrounded in quotes), return
  * an allocated full path of that filename
@@ -410,14 +415,10 @@ char *full_path (const char *filename) {
 	list_t *dir;
 	char *full_path;
 
-	const char * clean = sanitize_path(filename);
+	const char * path = sanitize_path(filename);
 
-#ifdef WIN32
-	if (is_abs_path(filename) && (GetFileAttributes(filename) != 0xFFFFFFFF))
-#else
-	if (is_abs_path(clean))// && (access (filename, R_OK) == 0)) TODO what
-#endif
-		return strdup (clean);
+	if (file_exists(path))
+		return strdup (path);
 	
 	dir = include_dirs;
 	full_path = NULL;
@@ -426,25 +427,21 @@ char *full_path (const char *filename) {
 		
 		eb_append (eb, (char *) dir->data, -1);
 		eb_append (eb, "/", 1);
-		eb_append (eb, clean, -1);
+		eb_append (eb, path, -1);
 		free (full_path);
 		full_path = eb_extract (eb);
 		fix_filename (full_path);
 		eb_free (eb);
 		dir = dir->next;
 #ifdef WIN32
-	} while (GetFileAttributes(clean) == 0xFFFFFFFF && dir);
+	} while (GetFileAttributes(path) == 0xFFFFFFFF && dir);
 #else
 	}
-	// while (access (clean, R_OK) && dir); TOOD: boor
+	// while (access (path, R_OK) && dir); TODO: boor
 	while (false);
 #endif
 
-#ifdef WIN32
-	if (GetFileAttributes(full_path) != 0xFFFFFFFF)
-#else
-	// if (access (full_path, R_OK) == 0) TODO: crossy pls
-#endif
+	if (file_exists(full_path))
 		return full_path;
 	
 	free (full_path);
