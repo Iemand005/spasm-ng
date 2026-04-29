@@ -38,7 +38,7 @@ char *handle_preop (char *ptr) {
 	name_end = ptr;
 	while (*name_end != 0 && !isspace(*name_end))
 		name_end++;
-	// name = strndup (ptr, name_end - ptr); todo: tod TODO: ok
+	name = strndup (ptr, name_end - ptr);
 
 	//then try to match it against the list of preops
 	preop = 0;
@@ -104,7 +104,7 @@ char *handle_preop (char *ptr) {
 
 			nIfLevel++;
 			name_end = skip_to_name_end (ptr);
-			// name = strndup (ptr, name_end - ptr); TODO: bruh
+			name = strndup (ptr, name_end - ptr);
 			//if it's defined, do all the normal #if stuff
 			define = search_defines (name);
 			condition = (define != NULL) && (define->contents!= NULL);
@@ -127,7 +127,7 @@ char *handle_preop (char *ptr) {
 
 			nIfLevel++;
 			name_end = skip_to_name_end (ptr);
-			// name = strndup (ptr, name_end - ptr); TODO: OTher Dup
+			name = strndup (ptr, name_end - ptr);
 
 			//same as #ifdef, but reversed
 			define = search_defines (name);
@@ -172,7 +172,7 @@ char *handle_preop (char *ptr) {
 			}
 
 			name_end = skip_to_name_end (ptr);
-			// name = strndup (ptr, name_end - ptr); TODO: Here too
+			name = strndup (ptr, name_end - ptr);
 			remove_define (name);
 			free (name);
 			ptr = name_end;
@@ -197,7 +197,7 @@ char *handle_preop (char *ptr) {
 
 			//get the name
 			name_end = skip_to_name_end (ptr);
-			// char *name = strndup(ptr, name_end - ptr); TODO: Here too do
+			char *name = strndup(ptr, name_end - ptr);
 			
 			macro = add_define (name, NULL);
 			
@@ -281,7 +281,7 @@ char *handle_preop_define (const char *ptr) {
 
 	//get the name
 	name_end = skip_to_name_end (ptr);
-	// define = add_define (strndup (ptr, name_end - ptr), &redefined); TODO: Do this ttoo
+	define = add_define (strndup (ptr, name_end - ptr), &redefined);
 	if (define == NULL)
 		return skip_to_line_end (ptr);
 
@@ -381,12 +381,11 @@ char *handle_preop_define (const char *ptr) {
 			eb_free(buffer);
 			ptr = eval_ptr;
 			
+		} else {
+			value_end = skip_to_line_end (ptr);
+			set_define (define, ptr, value_end - ptr, redefined);
+			ptr = value_end;
 		}
-		// else { TODO: What;s thtis?
-		// 	value_end = skip_to_line_end (ptr);
-		// 	set_define (define, ptr, value_end - ptr, redefined);
-		// 	ptr = value_end;
-		// }
 	}
 
 	return (char *) ptr;
