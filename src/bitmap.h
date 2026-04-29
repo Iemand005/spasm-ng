@@ -1,7 +1,9 @@
 #ifndef _BITMAP_H
 #define _BITMAP_H
 
-bool IsFileBitmap(FILE *file);
+#include <stdbool.h>
+
+bool is_file_bitmap(FILE *file);
 void handle_bitmap (FILE *file);
 
 #endif

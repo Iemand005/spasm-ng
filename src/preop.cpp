@@ -413,7 +413,7 @@ bool file_exists(const std::string& name) {
  * return NULL if there's no matching path
  */
 
-char *full_path (const char *filename) {
+char *full_path(const char *filename) {
 	list_t *dir;
 	char *full_path;
 
@@ -455,7 +455,7 @@ char *full_path (const char *filename) {
  * in file
  */
 
-static char *handle_preop_include (char *ptr)
+static char *handle_preop_include(char *ptr)
 {
 	char name[MAX_PATH], *file_path;
 	FILE *file;
@@ -464,7 +464,7 @@ static char *handle_preop_include (char *ptr)
 
 	int old_line_num, old_in_macro, old_old_line_num;
 
-	if (is_end_of_code_line (ptr)) {
+	if (is_end_of_code_line(ptr)) {
 		show_error ("#INCLUDE is missing file name");
 		return ptr;
 	}
@@ -482,35 +482,32 @@ static char *handle_preop_include (char *ptr)
 		}
 	}
 
-	fix_filename (name);
+	fix_filename(name);
 	
-	qs = skip_whitespace (name);
+	qs = skip_whitespace(name);
+
 	if (*qs == '"') {
 		qs++;
 		for (i = 0; qs[i] != '"' && qs[i] != '\0'; i++);
 		qs[i] = '\0';
 	}
 
-	//now see where it is, using include directories
-	file_path = full_path (qs);
+	// Now see where it is, using include directories
+	file_path = full_path(qs);
 
-	//finally, now that we've got the full path, determine file type
-	if (!file_path || !(file = fopen (file_path, "rb")))
-	{
+	// Finally, now that we've got the full path, determine file type
+	if (!file_path || !(file = fopen (file_path, "rb"))) {
 		SetLastSPASMError(SPASM_ERR_FILE_NOT_FOUND, name);
 		show_error ("%s: No such file or directory", name);
 		if (file_path) free (file_path);
 		return ptr;
 	}
 	
-	if (IsFileBitmap(file))
-	{
+	if (is_file_bitmap(file)) {
 		handle_bitmap(file);
 		fclose (file);
 		free (file_path);
-	}
-	else
-	{
+	} else {
 		fclose (file);
 		
 		input_contents = get_file_contents (file_path);

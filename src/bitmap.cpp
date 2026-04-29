@@ -141,8 +141,7 @@ static WORD log2(WORD value)
 }
 #endif
 
-bool IsFileBitmap(FILE *file)
-{
+bool is_file_bitmap(FILE *file) {
 	fseek(file, 0, SEEK_SET);
 
 	BITMAPFILEHEADER bf;
@@ -158,8 +157,7 @@ bool IsFileBitmap(FILE *file)
 	}
 }
 
-static void handle_bitmap_internal(FILE *file, const RECT *r, const BITMAPFILEHEADER *bf, const BITMAPINFOHEADER *bi, const LPRGBQUAD bmiColors)
-{
+static void handle_bitmap_internal(FILE *file, const RECT *r, const BITMAPFILEHEADER *bf, const BITMAPINFOHEADER *bi, const LPRGBQUAD bmiColors) {
 	//printf("handle_bitmap on: %d %d %d %d\n", r->left, r->top, r->right, r->bottom);
 	
 	// Bytes, padded to the nearest 32-bit
