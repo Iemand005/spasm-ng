@@ -242,7 +242,7 @@ char *eval (const char *expr)
 			sign = "-";
 			value = -value;
 		}
-		// snprintf (result, sizeof (result), "%s$%0X", sign, value); TODO: OK
+		snprintf(result, sizeof (result), "%s$%0X", sign, value);
 		expr_value = strdup (result);
 	}
 	else
@@ -461,8 +461,8 @@ bool read_expr_impl(const char ** const ptr, char word[256], const char *delims)
 finish_read_expr:
 	// Remove whitespace at the end
 	if (word) {
-		// while (word_ptr > word && isspace((unsigned char) word_ptr[-1])) 
-		// 	*(--word_ptr) = '\0'; TODO: same ting
+		while (word_ptr > word && isspace((unsigned char) word_ptr[-1])) 
+			*(--word_ptr) = '\0';
 		*word_ptr = '\0';
 	}
 
@@ -612,8 +612,8 @@ bool is_abs_path(const char *filename) {
 	if (strlen(fn) < 2)
 		return false;
 	
-	// if (fn[1] == ':' && isalpha(fn[0]))
-	// 	return true; TODO: The alpha
+	if (fn[1] == ':' && isalpha(fn[0]))
+		return true;
 	
 	return false;
 }
@@ -834,7 +834,7 @@ static void expand_expr_full (const char *expr, expand_buf *new_expr, int depth,
 		name_len = name - expr;
 		//skip if there's no name, or if it's a macro with arguments
 		if (name_len > 0) {
-			// name = strndup (expr, name_len); TODO: ugh
+			name = strndup(expr, name_len);
 			
 			//if it's a define, recursively expand its contents
 			if ((define = search_defines (name, search_local)) && define->contents != NULL) {

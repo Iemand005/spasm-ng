@@ -339,13 +339,13 @@ static define_t *search_defines_helper(const char *name_start, size_t len)
  * the file
  */
 
-char *handle_opcode_or_macro (char *ptr) {
+char *handle_opcode_or_macro(char *ptr) {
 	char *name_end;
 	char *name_start = ptr;
 	opcode *curr_opcode;
 
 	//first get the name
-	name_end = skip_to_name_end (ptr);
+	name_end = skip_to_name_end(ptr);
 	ptr = name_end;
 
 	//parse the suffix if possible
@@ -585,7 +585,7 @@ char *handle_opcode_or_macro (char *ptr) {
 		} else {
 			char *name = strndup(name_start, name_end - name_start);
 			SetLastSPASMError(SPASM_ERR_UNKNOWN_OPCODE, name);
-			free (name);
+			free(name);
 		}
 	}
 

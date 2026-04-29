@@ -481,7 +481,7 @@ void set_define (define_t *define, const char *str, int len, bool redefined) {
 		if (define->contents)
 			free (define->contents);
 
-		// define->contents = (len == -1 ? strdup (str) : strndup (str, len)); TODO: Duplicate replacement
+		define->contents = (len == -1 ? strdup (str) : strndup (str, len));
 
 	} else {
 		char *result, *temp;

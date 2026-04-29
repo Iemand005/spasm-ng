@@ -465,7 +465,7 @@ void makeprgm (const unsigned char *output_contents, int size, FILE *outfile, co
 	
 	if (calc==TYPE_82P) {
 		char name_buf[256];
-		// snprintf(name_buf, sizeof(name_buf), "\xdc%s", prgmname); TODO: What
+		snprintf(name_buf, sizeof(name_buf), "\xdc%s", prgmname);
 		namestring = strdup (name_buf);
 	} else {
 		// Find basename(prgmname)
