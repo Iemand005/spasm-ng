@@ -117,7 +117,7 @@ const char *skip_to_code_line_end(const char *ptr)
 	return next + 1;
 }
 
-char *skip_whitespace (const char *ptr) {
+char *skip_whitespace(const char *ptr) {
 	if (ptr == NULL)
 		return NULL;
 
@@ -661,7 +661,7 @@ char *get_file_contents(const char *filename) {
 
 	// First try to open it
 	file = fopen(filename, "rb");
-	char *contents = get_file_contents(file);
+	char *contents = get__open_file_contents(file);
 	fclose(file);
 	return contents;
 }
@@ -674,7 +674,7 @@ char *get_file_contents(const char *filename) {
  * or NULL on error
  */
 
-char *get_file_contents(FILE *file) {
+char *get__open_file_contents(FILE *file) {
 #ifdef USE_MEMORY_MAPPED_FILES
 	HANDLE hFile = CreateFile(
 		filename,

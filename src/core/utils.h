@@ -6,12 +6,17 @@
 
 #define MAX_ARG_LEN	256
 #define ARG_CONTEXT_INITIALIZER {"", true, false}
+
 typedef struct arg_context
 {
 	char arg[MAX_ARG_LEN];
 	bool fExpectingMore;
 	bool fLiteralArg;
 } arg_context_t;
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 char *eval(const char *expr);
 bool is_end_of_code_line(const char *ptr);
@@ -36,7 +41,7 @@ char *fix_filename(char *filename);
 bool is_abs_path(const char *filename);
 char *strup(const char *input);
 char *get_file_contents(const char *filename);
-char *get_file_contents(FILE *file);
+char *get__open_file_contents(FILE *file);
 void release_file_contents(char *contents);
 char *change_extension(const char *filename, const char *new_ext);
 bool define_with_value(const char *name, const int value);
@@ -60,6 +65,10 @@ void show_error(const char *text, ...);
 void show_fatal_error(const char *text, ...);
 void show_warning_prefix(const char *zcif, const int zln);
 void show_warning(const char *text, ...);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif
 

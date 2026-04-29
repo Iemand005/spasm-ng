@@ -521,7 +521,7 @@ static char *handle_preop_include(char *ptr)
 		free (file_path);
 	} else {
 		
-		input_contents = get_file_contents(file);
+		input_contents = get__open_file_contents(file);
 		fclose (file);
 
 		if (!input_contents) {
