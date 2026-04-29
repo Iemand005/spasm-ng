@@ -14,6 +14,7 @@ set(SPASM_SOURCES
 )
 
 set(SPASM_INCLUDES ./)
+set(SPASM_CORE_INCLUDES ${CMAKE_SOURCE_DIR}/src/core)
 
 add_library(libspasm STATIC ${SPASM_LIB_SOURCES})
 add_executable(spasm ${SPASM_SOURCES})
@@ -29,6 +30,6 @@ set_target_properties(libspasm PROPERTIES LINKER_LANGUAGE CXX)
 set_target_properties(spasm PROPERTIES LINKER_LANGUAGE CXX)
 
 target_include_directories(libspasm PUBLIC ${SPASM_INCLUDES})
-target_include_directories(spasm PUBLIC ${SPASM_INCLUDES})
+target_include_directories(spasm PUBLIC ${SPASM_INCLUDES} ${SPASM_CORE_INCLUDES})
 
 add_definitions(-DNO_APPSIGN -DUSE_REUSABLES)

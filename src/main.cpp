@@ -1,15 +1,15 @@
-#include "stdafx.h"
+#include "core/stdafx.h"
 
 #define __MAIN_C
 
-#include "pass_one.h"
-#include "pass_two.h"
-#include "opcodes.h"
-#include "storage.h"
-#include "spasm.h"
-#include "utils.h"
-#include "console.h"
-#include "errors.h"
+#include <pass_one.h>
+#include <pass_two.h>
+#include <opcodes.h>
+#include <storage.h>
+#include <spasm.h>
+#include <utils.h>
+#include <console.h>
+#include <errors.h>
 
 #define LISTING_BUF_SIZE 65536	//initial size of buffer for output listing
 
