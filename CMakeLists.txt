@@ -3,17 +3,22 @@ project(spasm)
 
 # add_subdirectory(external/openssl-cmake)
 
-file(GLOB SPASM_SOURCES 
-    # external/md5-c/md5.c
-    "src/*.c" 
-    "src/*.cpp"
-    "src/*.h"
+file(GLOB SPASM_LIB_SOURCES 
+    "src/core/*.c" 
+    "src/core/*.cpp"
+    "src/core/*.h"
+)
+
+set(SPASM_SOURCES 
+    "src/main.cpp"
 )
 
 set(SPASM_INCLUDES ./)
 
-add_library(libspasm STATIC ${SPASM_SOURCES})
+add_library(libspasm STATIC ${SPASM_LIB_SOURCES})
 add_executable(spasm ${SPASM_SOURCES})
+
+target_link_libraries(spasm libspasm)
 
 if(MSVC)
     add_compile_options(/TP)
