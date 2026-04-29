@@ -417,7 +417,7 @@ const char *sanitize_path(std::string path) {
 	if (!path.empty() && path.front() == ' ') path.erase(0, 1);
 	if (!path.empty() && path.front() == '"') path.erase(0, 1);
 	if (!path.empty() && path.back() == '"') path.pop_back();
-	return path.c_str();
+	return strdup(path.c_str());
 }
 
 bool file_exists(const std::string& name) {
@@ -435,7 +435,7 @@ char *full_path(const char *filename) {
 	list_t *dir;
 	char *full_path;
 
-	const char * path = sanitize_path(filename);
+	const char *path = sanitize_path(filename);
 
 	if (file_exists(path))
 		return strdup (path);
@@ -443,7 +443,7 @@ char *full_path(const char *filename) {
 	dir = include_dirs;
 	full_path = NULL;
 	do if (dir) {
-		expand_buf_t *eb = eb_init (-1);
+		expand_buf_t *eb = eb_init(-1);
 		
 		eb_append (eb, (char *) dir->data, -1);
 		eb_append (eb, "/", 1);
@@ -453,18 +453,12 @@ char *full_path(const char *filename) {
 		fix_filename (full_path);
 		eb_free (eb);
 		dir = dir->next;
-#ifdef WIN32
-	} while (GetFileAttributes(path) == 0xFFFFFFFF && dir);
-#else
-	}
-	// while (access (path, R_OK) && dir); TODO: boor
-	while (false);
-#endif
+	} while (file_exists(path) && dir); // TODO: does this even make sense
 
 	if (file_exists(full_path))
 		return full_path;
 	
-	free (full_path);
+	free(full_path);
 	return NULL;
 }
 
@@ -528,7 +522,7 @@ static char *handle_preop_include(char *ptr)
 	} else {
 		fclose (file);
 		
-		input_contents = get_file_contents (file_path);
+		input_contents = get_file_contents(file_path);
 		if (!input_contents) {
 			show_error ("Couldn't open #included file %s", file_path);
 			free (file_path);
@@ -537,18 +531,18 @@ static char *handle_preop_include(char *ptr)
 
 		//add it to the list of input files
 		alloc_path = strdup (file_path);
-		input_files = list_prepend (input_files, alloc_path);
+		input_files = list_prepend(input_files, alloc_path);
 		free (file_path);
 
 		//make sure the listing for this line is finished up BEFORE
 		// the new file is parsed and writes its listing stuff all over
 		if (mode & MODE_LIST && listing_on && !listing_for_line_done)
-			do_listing_for_line (skip_to_next_line (line_start));
+			do_listing_for_line (skip_to_next_line(line_start));
 
 		if (mode & MODE_LIST && listing_on) {
 			char include_banner[MAX_PATH + 64];
 			// snprintf(include_banner, sizeof (include_banner), "Listing for file \"%s\"" NEWLINE, fix_filename (alloc_path)); TODO: Aagain
-			listing_offset = eb_insert (listing_buf, listing_offset, include_banner, strlen (include_banner));
+			listing_offset = eb_insert(listing_buf, listing_offset, include_banner, strlen(include_banner));
 		}
 		
 		//swap out the old curr_X values, and swap in the new ones
@@ -646,21 +640,21 @@ char *handle_preop_import (char *ptr) {
  * location in file
  */
 
-char *handle_preop_if (char *ptr) {
+char *handle_preop_if(char *ptr) {
 	const char *expr_end;
 	char *expr;
 	int condition;
 
-	if (is_end_of_code_line (ptr)) {
+	if (is_end_of_code_line(ptr)) {
 		SetLastSPASMError(SPASM_ERR_EXPRESSION_EXPECTED);
 		return ptr;
 	}
 
 	expr_end = skip_to_code_line_end(ptr);
 
-	expr = strndup (ptr, expr_end - ptr);
+	expr = strndup(ptr, expr_end - ptr);
 	
-	parse_num (expr, &condition);
+	parse_num(expr, &condition);
 	free(expr);
 	
 	return do_if ((char *) expr_end, condition);
