@@ -213,16 +213,17 @@ struct _timeb {
 #else
 	ftime(&time_end);
 #endif
-	int s_diff = (int) (time_end.time - time_start.time);
-	int ms_diff = time_end.millitm - time_start.millitm;
-	if (ms_diff < 0) {
-		ms_diff += 1000;
-		s_diff -= 1;
-	} else if (ms_diff > 1000) {
-		ms_diff -= 1000;
-		s_diff += 1;
-	}
-	printf("Assembly time: %0.3f seconds\n", (float) s_diff + ((float) ms_diff / 1000.0f));
+	// std::chrono::m
+	// int s_diff = (int) (time_end.time - time_start.time);
+	// int ms_diff = time_end.millitm - time_start.millitm;
+	// if (ms_diff < 0) {
+	// 	ms_diff += 1000;
+	// 	s_diff -= 1;
+	// } else if (ms_diff > 1000) {
+	// 	ms_diff -= 1000;
+	// 	s_diff += 1;
+	// }
+	// printf("Assembly time: %0.3f seconds\n", (float) s_diff + ((float) ms_diff / 1000.0f));
 	return exit_code;
 }
 void print_help_message(void){
