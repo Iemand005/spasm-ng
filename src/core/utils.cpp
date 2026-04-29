@@ -73,10 +73,9 @@ char *skip_to_next_line (const char *ptr) {
 	return (char *) ptr;
 }
 
-bool is_name_char (char c) {
+bool is_name_char(char c) {
   static const char ext_label_set[] = { '_', '[', ']', '!', '?', '.' };
-  // return isalnum(c) || memchr(ext_label_set, c, sizeof(ext_label_set)) != NULL;
-	return false ; // TODO: Replace isalnum
+  return isalnum(c) || memchr(ext_label_set, c, sizeof(ext_label_set)) != NULL;
 }
 
 /*
@@ -122,8 +121,8 @@ char *skip_whitespace (const char *ptr) {
 	if (ptr == NULL)
 		return NULL;
 
-	// while (isspace ((unsigned char) *ptr) && *ptr != '\n' && *ptr != '\r')
-	// 	ptr++; TODO: replace isspace
+	while (isspace ((unsigned char) *ptr) && *ptr != '\n' && *ptr != '\r')
+		ptr++;
 
 	return (char *) ptr;
 }

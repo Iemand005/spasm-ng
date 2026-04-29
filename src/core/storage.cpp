@@ -489,11 +489,11 @@ void set_define (define_t *define, const char *str, int len, bool redefined) {
 		list_t *old_arg_list = arg_list;
 		//arg_list = NULL;
 
-		define_table = hash_init (destroy_define_value);
+		define_table = hash_init(destroy_define_value);
 		
-		add_define (strdup (define->name), NULL, false)->contents = strdup (define->contents);
-		// temp = len == -1 ? strdup (str) : strndup (str, len); TODO: this strdup bru
-		result = expand_expr (temp, false);
+		add_define(strdup(define->name), NULL, false)->contents = strdup(define->contents);
+		temp = len == -1 ? strdup(str) : strndup(str, len);
+		result = expand_expr(temp, false);
 		free(temp);
 
 		if (define->contents != NULL)
