@@ -33,13 +33,13 @@
 #define REGION      16
 #define ENDREGION   17
 
-char *do_if (char *ptr, int condition);
-char *do_elif (char *ptr, int condition);
-char *handle_preop_define (const char *ptr);
-static char *handle_preop_include (char *ptr);
-char *handle_preop_import (char *ptr);
-char *handle_preop_if (char *ptr);
-static char *skip_until (char *ptr, int *line, int argc, ...);
+char *do_if(char *ptr, int condition);
+char *do_elif(char *ptr, int condition);
+char *handle_preop_define(const char *ptr);
+static char *handle_preop_include(char *ptr);
+char *handle_preop_import(char *ptr);
+char *handle_preop_if(char *ptr);
+static char *skip_until(char *ptr, int *line, int argc, ...);
 
 extern bool case_sensitive;
 static define_t *last_define = NULL;
@@ -66,9 +66,8 @@ char *handle_preop(char *ptr) {
 	//then try to match it against the list of preops
 	preop = 0;
 	while (preops[preop]) {
-		if (!strcasecmp (preops[preop], name)) {
+		if (!strcasecmp (preops[preop], name))
 			break;
-		}
 		preop++;
 	}
 
