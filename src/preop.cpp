@@ -400,12 +400,19 @@ char *handle_preop_define (const char *ptr) {
 char *full_path (const char *filename) {
 	list_t *dir;
 	char *full_path;
+
+	std::string path = filename;
+
+	if (!path.empty() && path.front() == ' ') path.erase(0, 1);
+	if (!path.empty() && path.front() == '"') path.erase(0, 1);
+	if (!path.empty() && path.back() == '"') path.pop_back();
+
 #ifdef WIN32
 	if (is_abs_path(filename) && (GetFileAttributes(filename) != 0xFFFFFFFF))
 #else
-	// if (is_abs_path(filename) && (access (filename, R_OK) == 0)) TODO what
+	if (is_abs_path(path.c_str()))// && (access (filename, R_OK) == 0)) TODO what
 #endif
-		return strdup (filename);
+		return strdup (path.c_str());
 	
 	dir = include_dirs;
 	full_path = NULL;
@@ -414,7 +421,7 @@ char *full_path (const char *filename) {
 		
 		eb_append (eb, (char *) dir->data, -1);
 		eb_append (eb, "/", 1);
-		eb_append (eb, filename, -1);
+		eb_append (eb, path.c_str(), -1);
 		free (full_path);
 		full_path = eb_extract (eb);
 		fix_filename (full_path);
