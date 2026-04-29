@@ -190,7 +190,7 @@ char *run_first_pass_line (char *ptr) {
  * the end of the usable part
  */
 
-char *run_first_pass_line_sec (char *ptr) {
+char *run_first_pass_line_secold (char *ptr) {
 
 	if (is_end_of_code_line (ptr)) {
 		//if the line's blank or a comment, don't do anything with it
@@ -260,6 +260,68 @@ char *run_first_pass_line_sec (char *ptr) {
 		SetLastSPASMError(SPASM_ERR_SYNTAX);
 		return ptr;
 	}
+}
+
+char *run_first_pass_line_sec(char *ptr) {
+	while (ptr && !is_end_of_code_line(ptr)) {
+        
+		if (isalpha((unsigned char)*ptr) || *ptr == '_') {
+			char *name, *label_end;
+
+			label_end = skip_to_name_end(ptr);
+			if (*label_end == '(')
+				return handle_opcode_or_macro(ptr);
+
+			name = strndup(ptr, label_end - ptr);
+			ptr = label_end;
+            
+			if (*ptr == ':') ptr++;
+            
+#ifdef USE_REUSABLES
+			if (strcmp(name, "_") == 0) {
+				add_reusable();
+				free(name);
+			} else {
+#else
+				if (1) { // Inverted logic for clarity without the #else 0
+#endif
+					last_label = add_label(name, program_counter);
+			}
+			continue; 
+
+		} else if (isspace((unsigned char)*ptr)) {
+				ptr = skip_whitespace(ptr);
+
+			if (isalpha((unsigned char)*ptr) || *ptr == '_')
+				return handle_opcode_or_macro(ptr);
+
+						continue; 
+
+		} else if (*ptr == '.') {
+			return handle_directive(++ptr);
+		} else if (*ptr == '#') {
+			return handle_preop(++ptr);
+		} else if (*ptr == '=') {
+			int value;
+			char value_str[256];
+			ptr++;
+			read_expr(&ptr, value_str, "");
+
+			if (parse_num(value_str, &value) == true) {
+				if (last_label == NULL) {
+					SetLastSPASMError(SPASM_ERR_EQUATE_MISSING_LABEL);
+				} else {
+					last_label->value = value;
+				}
+			}
+			return ptr; // Meestal stopt een EQU na de expressie
+
+		} else {
+			SetLastSPASMError(SPASM_ERR_SYNTAX);
+			return ptr; 
+		}
+	}
+	return ptr;
 }
 
 
