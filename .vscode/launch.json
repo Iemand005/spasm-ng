@@ -8,7 +8,7 @@
             "program": "${command:cmake.launchTargetPath}",
             "args": [
                 "C:\\Users\\Lasse\\Documents\\Projects\\spasm-ng\\build\\Debug\\test.asm",
-                "EE.8xp"
+                "EEWOO.8xp"
             ],
             "cwd": "${workspaceFolder}",
             "console": "integratedTerminal"

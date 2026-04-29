@@ -11,6 +11,8 @@
 #include <console.h>
 #include <errors.h>
 
+#include <chrono>
+
 #define LISTING_BUF_SIZE 65536	//initial size of buffer for output listing
 
 void write_file (const unsigned char *, int, const char *);
