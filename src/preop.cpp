@@ -14,6 +14,25 @@
 #include <sys/stat.h>
 #include <stdbool.h>
 
+#define DEFINE      0
+#define INCLUDE     1
+#define IF          2
+#define IFDEF       3
+#define IFNDEF      4
+#define ELSE        5
+#define ELIF        6
+#define ENDIF       7
+#define UNDEF       8
+#define UNDEFINE    9
+#define COMMENT     10
+#define ENDCOMMENT  11
+#define MACRO       12
+#define ENDMACRO    13
+#define IMPORT      14
+#define DEFCONT     15
+#define REGION      16
+#define ENDREGION   17
+
 char *do_if (char *ptr, int condition);
 char *do_elif (char *ptr, int condition);
 char *handle_preop_define (const char *ptr);
@@ -67,23 +86,23 @@ char *handle_preop(char *ptr) {
 
 	//otherwise, decide what to do depending on what the preop is
 	switch (preop) {
-		case 0:	//DEFINE
+		case DEFINE:	//DEFINE
 		{
 			ptr = handle_preop_define (ptr);
 			break;
 		}
-		case 1: //INCLUDE
+		case INCLUDE: //INCLUDE
 		{
 			ptr = handle_preop_include (ptr);
 			break;
 		}
-		case 2: //IF
+		case IF: //IF
 		{
 			nIfLevel++;
 			ptr = handle_preop_if (ptr);
 			break;
 		}
-		case 6: // ELIF
+		case ELIF: // ELIF
 			{
 				if (nIfLevel == 0)
 				{
@@ -94,7 +113,7 @@ char *handle_preop(char *ptr) {
 				EndSPASMErrorSession(session);
 				break;
 			}
-		case 3: //IFDEF
+		case IFDEF: //IFDEF
 		{
 			char *name_end, *name;
 			define_t *define;
@@ -116,7 +135,7 @@ char *handle_preop(char *ptr) {
 			free (name);
 			break;
 		}
-		case 4: //IFNDEF
+		case IFNDEF: //IFNDEF
 		{
 			char *name_end, *name;
 			define_t *define;
@@ -140,7 +159,7 @@ char *handle_preop(char *ptr) {
 			free (name);
 			break;
 		}
-		case 5: //ELSE
+		case ELSE: //ELSE
 		{
 			if (nIfLevel == 0)
 			{
@@ -154,7 +173,7 @@ char *handle_preop(char *ptr) {
 			}
 			break;
 		}
-		case 7: //ENDIF
+		case ENDIF: //ENDIF
 		{
 			if (nIfLevel > 0)
 			{
@@ -166,8 +185,8 @@ char *handle_preop(char *ptr) {
 			}
 			break;
 		}
-		case 8: //UNDEF
-		case 9: //UNDEFINE
+		case UNDEF: //UNDEF
+		case UNDEFINE: //UNDEFINE
 		{
 			//get the name of the define to remove
 			if (is_end_of_code_line (ptr)) {
@@ -182,14 +201,14 @@ char *handle_preop(char *ptr) {
 			ptr = name_end;
 			break;
 		}
-		case 10: //COMMENT
+		case COMMENT: //COMMENT
 		{
 			int session = StartSPASMErrorSession();
 			ptr = skip_until (ptr, &line_num, 1, "#endcomment");
 			EndSPASMErrorSession(session);
 			break;
 		}
-		case 12: //MACRO
+		case MACRO: //MACRO
 		{
 			char *name_end, *macro_end;
 			define_t *macro;
@@ -199,7 +218,7 @@ char *handle_preop(char *ptr) {
 				return ptr;
 			}
 
-			//get the name
+			// Get the name
 			name_end = skip_to_name_end (ptr);
 			char *name = strndup(ptr, name_end - ptr);
 			
@@ -210,7 +229,7 @@ char *handle_preop(char *ptr) {
 
 			name_end = skip_whitespace (name_end);
 			if (*name_end == '(') {
-				//it has arguments, so parse them
+				// It has arguments, so parse them
 				ptr = parse_arg_defs (++name_end, macro);
 				if (ptr == NULL)
 					return NULL;
@@ -223,7 +242,7 @@ char *handle_preop(char *ptr) {
 			macro->line_num++;
 			
 			fInMacro = true;
-			//now find the end of the macro (at the end of the file or an #endmacro directive)
+			// Now find the end of the macro (at the end of the file or an #endmacro directive)
 			//ptr = skip_to_next_line (ptr);
 			macro_end = skip_until (ptr, &line_num, 1, "#endmacro");
 
@@ -234,16 +253,16 @@ char *handle_preop(char *ptr) {
 			ptr = macro_end;
 			break;
 		}
-		case 13: //ENDMACRO
+		case ENDMACRO: //ENDMACRO
 			{
 				break;
 			}
-		case 14: //IMPORT
+		case IMPORT: //IMPORT
 		{
 			ptr = handle_preop_import (ptr);
 			break;
 		}
-		case 15: //DEFCONT
+		case DEFCONT: //DEFCONT
 		{
 			if (last_define == NULL) {
 				SetLastSPASMError(SPASM_ERR_NO_PREVIOUS_DEFINE);
