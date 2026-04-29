@@ -213,7 +213,7 @@ struct _timeb {
 #else
 	ftime(&time_end);
 #endif
-	// std::chrono::m
+	// std::chrono:8:m
 	// int s_diff = (int) (time_end.time - time_start.time);
 	// int ms_diff = time_end.millitm - time_start.millitm;
 	// if (ms_diff < 0) {
