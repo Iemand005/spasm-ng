@@ -30,7 +30,7 @@ static bool fInMacro = false;
  * location in the file
  */
 
-char *handle_preop (char *ptr) {
+char *handle_preop(char *ptr) {
 	const char *preops[] = {"define", "include", "if", "ifdef", "ifndef", "else", "elif", "endif",
 		"undef", "undefine", "comment", "endcomment", "macro", "endmacro", "import", "defcont", "region", "endregion", NULL};
 	char *name_end, *name;
@@ -271,7 +271,7 @@ char *handle_preop (char *ptr) {
  * in file
  */
 
-char *handle_preop_define (const char *ptr) {
+char *handle_preop_define(const char *ptr) {
 	char *name_end, *value_end;
 	define_t *define;
 	bool redefined;
@@ -393,6 +393,13 @@ char *handle_preop_define (const char *ptr) {
 	return (char *) ptr;
 }
 
+const char *sanitize_path(std::string path) {
+	if (!path.empty() && path.front() == ' ') path.erase(0, 1);
+	if (!path.empty() && path.front() == '"') path.erase(0, 1);
+	if (!path.empty() && path.back() == '"') path.pop_back();
+	return path.c_str();
+}
+
 /*
  * Given a filename (which may be surrounded in quotes), return
  * an allocated full path of that filename
@@ -403,13 +410,7 @@ char *full_path (const char *filename) {
 	list_t *dir;
 	char *full_path;
 
-	std::string path = filename;
-	std::filesystem::path fullPath(path);
-	const char * clean = fullPath.lexically_normal().string().c_str();
-
-	// if (!path.empty() && path.front() == ' ') path.erase(0, 1);
-	// if (!path.empty() && path.front() == '"') path.erase(0, 1);
-	// if (!path.empty() && path.back() == '"') path.pop_back();
+	const char * clean = sanitize_path(filename);
 
 #ifdef WIN32
 	if (is_abs_path(filename) && (GetFileAttributes(filename) != 0xFFFFFFFF))
