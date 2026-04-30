@@ -12,7 +12,7 @@ set(SPASM_SOURCES
 )
 
 set(SPASM_INCLUDES ./)
-set(SPASM_CORE_INCLUDES ${CMAKE_SOURCE_DIR}/src/core)
+set(SPASM_CORE_INCLUDES ${CMAKE_CURRENT_SOURCE_DIR}/src/core)
 
 add_library(libspasm STATIC ${SPASM_LIB_SOURCES})
 add_executable(spasm ${SPASM_SOURCES})
