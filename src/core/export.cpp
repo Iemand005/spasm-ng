@@ -7,10 +7,7 @@
 
 #include "export.h"
 
-void makerom (const unsigned char *output_contents, DWORD output_len, FILE *outfile);
-void makehex (const unsigned char *output_contents, DWORD output_len, FILE *outfile);
-void makeapp (const unsigned char *output_contents, DWORD output_len, FILE *outfile, const char *prgmname);
-void makeprgm (const unsigned char *output_contents, int size, FILE *outfile, const char *prgmname, calc_type calc);
+
 
 // #include "md5.h"
 
@@ -99,7 +96,10 @@ enum calc_type {
 };
 
 
-
+void makerom (const unsigned char *output_contents, DWORD output_len, FILE *outfile);
+void makehex (const unsigned char *output_contents, DWORD output_len, FILE *outfile);
+void makeapp (const unsigned char *output_contents, DWORD output_len, FILE *outfile, const char *prgmname);
+void makeprgm (const unsigned char *output_contents, int size, FILE *outfile, const char *prgmname, calc_type calc); 
 
 void write_file(const unsigned char *output_contents, int output_len, const char *output_filename) {
 	FILE *outfile;

@@ -16,7 +16,7 @@
 #define LISTING_BUF_SIZE 65536	//initial size of buffer for output listing
 
 
-int assemble(expr_t *expr_list, expr_t *expr_list_tail, output_t *output_list, output_t *output_list_tail)
+int assemble()
 {
 	exit_code = EXIT_NORMAL;
 	
@@ -40,11 +40,6 @@ int assemble(expr_t *expr_list, expr_t *expr_list_tail, output_t *output_list, o
 	total_reusables = 0;
 #endif
 	
-	expr_list = NULL;
-	expr_list_tail = NULL;
-	output_list = NULL;
-	output_list_tail = NULL;
-
 	// assert(curr_input_file != NULL); TODO: aaegh
 
 	//read in the input file
