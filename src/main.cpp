@@ -247,12 +247,6 @@ void print_help_message(void){
 	puts ("-V <Expression> = Pipe expression directly into assembly");
 	puts ("-H = Print this help message");
 
-#if defined(_DEBUG) && defined(WIN32)
-	if (IsDebuggerPresent())
-	{
-		system("PAUSE");
-	}
-#endif
 	exit(EXIT_NORMAL);
 }
 
@@ -264,7 +258,7 @@ int CALLBACK WinMain(HINSTANCE hInst, HINSTANCE	 hPrev, LPSTR lpCommandLine, int
 #else
 int main (int argc, char **argv)
 {
-
+	init_spasm();
 	assemble(argv[1], argv[2]);
 	return 0;
 

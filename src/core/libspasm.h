@@ -16,6 +16,39 @@
 #define LISTING_BUF_SIZE 65536	//initial size of buffer for output listing
 
 
+int init_spasm() {
+	int curr_arg = 1;
+	bool case_sensitive = false;
+	bool is_storage_initialized = false;
+
+	extern WORD user_attributes;
+	user_attributes = save_console_attributes ();
+	atexit (restore_console_attributes_at_exit);
+
+	//init stuff
+	mode = MODE_NORMAL;
+	in_macro = 0;
+	
+	//otherwise, get any options
+	curr_input_file = strdup("Commandline");
+	char *starting_input_file = curr_input_file;
+
+	// Update case sensitivity settings
+	set_case_sensitive (case_sensitive);
+
+	if (!output_filename) {
+		output_filename = change_extension (curr_input_file, "bin");
+	}
+
+	if (!is_storage_initialized)
+	{
+		init_storage();
+		is_storage_initialized = true;
+	}
+	output_contents = (unsigned char *) malloc(output_buf_size);
+	ClearSPASMErrorSessions();
+}
+
 int assemble(char *input_file, char *output_file)
 {
 	exit_code = EXIT_NORMAL;
