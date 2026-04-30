@@ -16,7 +16,7 @@
 #define LISTING_BUF_SIZE 65536	//initial size of buffer for output listing
 
 
-int init_spasm() {
+void init_spasm() {
 	int curr_arg = 1;
 	bool case_sensitive = false;
 	bool is_storage_initialized = false;
@@ -47,6 +47,7 @@ int init_spasm() {
 	}
 	output_contents = (unsigned char *) malloc(output_buf_size);
 	ClearSPASMErrorSessions();
+
 }
 
 int assemble(char *input_file, char *output_file)
