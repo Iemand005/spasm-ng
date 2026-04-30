@@ -11,6 +11,8 @@
 #include <console.h>
 #include <errors.h>
 
+#include <libspasm.h>
+
 #include <chrono>
 
 #define LISTING_BUF_SIZE 65536	//initial size of buffer for output listing
@@ -262,6 +264,10 @@ int CALLBACK WinMain(HINSTANCE hInst, HINSTANCE	 hPrev, LPSTR lpCommandLine, int
 #else
 int main (int argc, char **argv)
 {
+
+	assemble(argv[1], argv[2]);
+	return 0;
+
 	int curr_arg = 1;
 	bool case_sensitive = false;
 	bool is_storage_initialized = false;

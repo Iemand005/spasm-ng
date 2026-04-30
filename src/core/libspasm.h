@@ -16,9 +16,13 @@
 #define LISTING_BUF_SIZE 65536	//initial size of buffer for output listing
 
 
-int assemble()
+int assemble(char *input_file, char *output_file)
 {
 	exit_code = EXIT_NORMAL;
+
+	curr_input_file = input_file;
+	output_filename = output_file;
+	
 	
 	/*extern int generic_map[256];
 	ZeroMemory(generic_map, 256);*/
