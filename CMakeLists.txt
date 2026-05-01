@@ -21,6 +21,7 @@ target_link_libraries(spasm libspasm)
 
 if(MSVC)
     add_compile_options(/TP)
+    add_compile_options(/MP)
 endif()
 
 
